@@ -1,0 +1,418 @@
+@use '/node_modules/modern-normalize/modern-normalize.css';
+
+// ! welcome to flexbox hell
+
+$border-9x:
+	inset 1px 1px white,
+	inset -1px -1px black,
+	inset 2px 2px #dfdfdf,
+	inset -2px -2px gray;
+
+$border-9x-invert:
+	inset -1px -1px white,
+	inset 1px 1px black,
+	inset -2px -2px #dfdfdf,
+	inset 2px 2px gray;
+
+@font-face {
+	font-family: 'Classic Console Neue';
+	font-style: normal;
+	src: url('/System/ImportantFiles/Fonts/clacon2.woff2');
+}
+
+@font-face {
+	font-family: 'PX Sans Nouveaux';
+	font-style: normal;
+	src: url('/System/ImportantFiles/Fonts/px_sans_nouveaux.ttf');
+}
+
+*,
+::after,
+::before {
+	margin: 0;
+	padding: 0;
+	border: 0 solid;
+}
+
+ol,
+ul,
+menu {
+	list-style: none;
+}
+
+// 1rem = 16px
+
+.errorpage {
+	color: white;
+	height: 100%;
+	width: 100%;
+	font-family: 'Classic Console Neue';
+	font-size: 1.25rem;
+
+	padding: 30rem;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 1rem;
+
+	&_title {
+		background-color: silver;
+		align-self: center;
+		padding-inline: 0.75rem;
+	}
+}
+
+.bootscreen {
+	background-color: black;
+	color: white;
+	height: 100%;
+	width: 100%;
+	padding: 1.5rem;
+
+	font-family: 'Classic Console Neue';
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	user-select: none;
+
+	&_title {
+		display: flex;
+		gap: 1.25rem;
+	}
+
+	&_optionsContainer {
+		margin-block: 2rem;
+		height: calc(100% * 2 / 3);
+		width: 100%;
+		padding: 0.5rem;
+		border: 2px solid white;
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	&_option {
+		display: flex;
+		gap: 0.25rem;
+		padding-inline: 1rem;
+	}
+
+	&_optionSelect {
+		background-color: white;
+		color: black;
+	}
+
+	&_arrow {
+		visibility: hidden;
+	}
+}
+
+.bootprepare {
+	background-color: black;
+	color: white;
+	height: 100%;
+	width: 100%;
+	padding: 1.5rem;
+
+	font-family: 'Classic Console Neue';
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+
+	user-select: none;
+
+	&_message {
+		display: flex;
+		flex-direction: row;
+		gap: 0.5rem;
+	}
+}
+
+.bootlaunch {
+	background-color: black;
+	color: white;
+	height: 100%;
+	width: 100%;
+	padding: 1.5rem;
+
+	font-family: 'Classic Console Neue';
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	user-select: none;
+	&_logo {
+		margin-bottom: 6rem;
+	}
+
+	&_loading {
+		background-size: 400% 400%;
+		background-image: linear-gradient(to left, #f0e961, #f0985d);
+		height: 1rem;
+		width: 100%;
+
+		position: absolute;
+		bottom: 0;
+		left: 0;
+	}
+}
+
+.operating-system {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	font-family: 'PX Sans Nouveaux';
+	image-rendering: crisp-edges;
+
+	user-select: none;
+
+	&_desktop {
+		height: 100%;
+		width: 100%;
+		background-image: url('/System/wallpaper-nope.jpeg');
+		// z-index: -50;
+	}
+}
+
+.taskbar {
+	background-color: silver;
+	font-size: 8px;
+	width: 100%;
+	padding: 0.25rem;
+
+	box-shadow: $border-9x;
+
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
+	display: flex;
+	flex-direction: row;
+
+	&_start-button {
+		background-color: silver;
+		min-height: 23px;
+		padding-inline: 6px;
+		padding-block: 2px;
+
+		// box-shadow: $border-9x;
+
+		display: inline-flex;
+		gap: 0.25rem;
+
+		& img {
+			height: 16px;
+			width: 16px;
+			align-self: center;
+		}
+
+		& span {
+			align-self: center;
+			line-height: 16px;
+			letter-spacing: 1px;
+			text-shadow: 1px 0;
+		}
+	}
+
+	&_programs {
+		flex: 1;
+		overflow-x: auto;
+	}
+
+	&_system-tray {
+		min-height: 23px;
+		padding-inline: 0.5rem;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		box-shadow:
+			inset 1px 1px gray,
+			inset -1px -1px white;
+	}
+}
+
+.start-menu {
+	background-color: silver;
+	color: white;
+	padding: 2px;
+
+	position: fixed;
+	bottom: 31px;
+
+	display: flex;
+	flex-direction: row;
+
+	box-shadow: $border-9x;
+
+	&_title {
+		background-image: linear-gradient(to top, blue, black);
+		font-size: 14px;
+		font-weight: bold;
+
+		padding-inline: 2px;
+		padding-block: 8px;
+		position: relative;
+
+		font-family: Arial, Helvetica, sans-serif;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+
+		span {
+			writing-mode: vertical-lr;
+			rotate: 180deg;
+		}
+	}
+
+	&_container {
+		min-width: 145px;
+		font-size: 8px;
+		color: black;
+
+		display: flex;
+		flex-direction: column;
+	}
+
+	&_item {
+		position: relative;
+
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		padding-inline: 8px;
+		padding-block: 4px;
+
+		&_sub {
+			&:hover::after {
+				content: url('/System/ImportantFiles/Shell/Window-UI/arrow-right-white.png');
+			}
+			&::after {
+				position: absolute;
+				right: 8px;
+				content: url('/System/ImportantFiles/Shell/Window-UI/arrow-right.png');
+			}
+		}
+
+		&:hover {
+			background-color: blue;
+			color: white;
+		}
+
+		img {
+			height: 24px;
+			width: 24px;
+		}
+
+		span {
+			margin-left: 8px;
+		}
+	}
+
+	&_divider {
+		margin: 3px;
+
+		display: block;
+		border-top: 1px solid gray;
+		border-bottom: 1px solid white;
+	}
+}
+
+.context-menu {
+	background-color: silver;
+	font-size: 8px;
+	min-width: 115px;
+	padding: 3px;
+
+	position: absolute;
+
+	box-shadow: $border-9x;
+
+	z-index: 50;
+
+	&_container {
+		color: black;
+
+		display: flex;
+		flex-direction: column;
+		line-height: 16px;
+	}
+
+	&_item {
+		padding-inline: 24px;
+		padding-block: 2px;
+
+		&:hover {
+			background-color: blue;
+			color: white;
+		}
+	}
+}
+
+.fade-overlay {
+	background-color: black;
+	height: 100%;
+	width: 100%;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	z-index: 50;
+}
+
+.button-9x {
+	background-color: silver;
+	min-height: 23px;
+	min-width: 75px;
+	padding-inline: 0.75rem;
+	font-size: 8px;
+	line-height: 1.35;
+	text-align: center;
+
+	box-shadow: $border-9x;
+
+	font-family: 'PX Sans Nouveaux';
+
+	&:active {
+		box-shadow: $border-9x-invert;
+	}
+}
+
+// useless-useful shadows
+
+.border-9x {
+	box-shadow: $border-9x;
+}
+
+.border-9x-invert {
+	box-shadow: $border-9x-invert;
+}

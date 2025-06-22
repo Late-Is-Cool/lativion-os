@@ -24,3 +24,6 @@ vite.config.ts.timestamp-*
 
 *storybook.log
 storybook-static
+
+.vscode
+z.txt
