@@ -1,11 +1,11 @@
-<script>
-	import { screenState } from '$lib/stores/stores.svelte';
+<script lang="ts">
+	import { screenState } from '$stores/stores.svelte';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
-	let overlay = $state(true);
+	let overlay: boolean = $state(true);
 
-	let stupidVar = $state('-Empty');
+	let stupidVar: string = $state('-Empty');
 
 	onMount(async () => {
 		overlay = false;
@@ -22,6 +22,9 @@
 	</div>
 	<div>
 		<img src="/System/ImportantFiles/Shell/Loading{stupidVar}.gif" alt="Loading Bar" />
+	</div>
+	<div class="bootlaunch_otherlogo">
+		<img src="/System/ImportantFiles/Brand/LateTheIdiot-White.png" alt="LateTheIdiot" />
 	</div>
 </div>
 

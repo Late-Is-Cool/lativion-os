@@ -1,16 +1,12 @@
-<script>
-	import { screenState } from '$lib/stores/stores.svelte';
+<script lang="ts">
+	import { screenState } from '$stores/stores.svelte';
 	import { onMount } from 'svelte';
 
-	/**
-	 * @type {{ text: String; status?: String; style?: string; func?: Function }[]}
-	 */
-	let visibleArray = $state([]);
+	let visibleArray: { text: String; status?: String; style?: string; func?: Function }[] = $state(
+		[]
+	);
 
-	/**
-	 * @type string
-	 */
-	let time = '';
+	let time: string = '';
 
 	onMount(() => {
 		let array = [
@@ -77,7 +73,7 @@
 				text: 'Updated firmware update',
 				status: 'ok',
 				func() {
-					if (Math.random() < 0.5) this.status = 'failed';
+					if (Math.random() < 0.1) this.status = 'failed';
 				}
 			},
 			{

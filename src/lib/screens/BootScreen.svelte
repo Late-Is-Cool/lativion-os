@@ -1,12 +1,17 @@
-<script>
-	import { screenState } from '$lib/stores/stores.svelte';
+<script lang="ts">
+	import { screenState, config } from '$stores/stores.svelte';
 
-	let select = $state(0);
+	let select: number = $state(0);
 
-	/**
-	 * @type {{id: number, option: string, func?: Function}[]}
-	 */
-	let options = $state([
+	type option = {
+		id: number;
+		option: string;
+		toggleOpt?: boolean;
+		toggled?: boolean;
+		func?: Function;
+	};
+
+	let options: option[] = $state([
 		{
 			id: 0,
 			option: 'Lativion OS MOOSE/BRUHB',
@@ -30,21 +35,36 @@
 			}
 		}
 	]);
-	/**
-	 * @type {{id: number, option: string, func?: Function}[]}
-	 */
-	let advancedOptions = $state([
-		// { id: 0, option: 'Volume', type: 'toggle' },
+
+	let advancedOptions: option[] = $state([
 		{
 			id: 0,
-			option: 'WIP',
+			option: 'Volume',
+			toggleOpt: true,
+			toggled: config.volume,
 			func() {
-				console.log('hi kid');
+				config.volume = !config.volume;
+				this.toggled = config.volume;
 			}
 		},
-		// { id: 1, option: 'Option 2' },
 		{
 			id: 1,
+			option: 'Fullscreen',
+			toggleOpt: true,
+			toggled: config.fullscreen,
+			func() {
+				const documentElement = document.documentElement;
+				if (!config.fullscreen) {
+					documentElement.requestFullscreen?.();
+				} else {
+					document.exitFullscreen?.();
+				}
+				config.fullscreen = !config.fullscreen;
+				this.toggled = config.fullscreen;
+			}
+		},
+		{
+			id: 2,
 			option: 'Back',
 			func() {
 				optionsPage = 0;
@@ -53,17 +73,14 @@
 		}
 	]);
 
-	let optionsPage = $state(0);
+	let optionsPage: number = $state(0);
 
-	let usingMouse = false;
+	let usingMouse: boolean = false;
 
-	/**
-	 * @param {KeyboardEvent} e
-	 */
-	function selectHandle(e) {
-		if (e.key !== 'F11') e.preventDefault();
+	function selectHandle(event: KeyboardEvent) {
+		event.preventDefault();
 		usingMouse = false;
-		switch (e.key) {
+		switch (event.key) {
 			case 'ArrowUp':
 				if (optionsPage === 0) {
 					select = select <= 0 ? options.length - 1 : select - 1;
@@ -84,7 +101,7 @@
 				selectOption();
 		}
 
-		console.log(e.key, select);
+		console.log(event.key, select);
 	}
 
 	function selectOption() {
@@ -100,7 +117,7 @@
 <div class="bootscreen">
 	<div class="bootscreen_title">
 		<div>MOOSE BRUHB</div>
-		<div>Version 0.05</div>
+		<div>Version 0.3.0</div>
 	</div>
 
 	<div class="bootscreen_optionsContainer">
@@ -120,6 +137,13 @@
 				<span>
 					{option.option}
 				</span>
+				{#if option?.toggleOpt}
+					<span
+						>[<span style="color: {option?.toggled ? 'lime' : 'red'}"
+							>{String(option?.toggled).toUpperCase()}</span
+						>]</span
+					>
+				{/if}
 			</div>
 		{/each}
 	</div>
@@ -130,7 +154,6 @@
 		<br />
 		Alternatively, use your mouse to select an entry.
 	</span>
-	<!-- <img src="https://svelte.dev/tutorial/image.gif" alt="Boot Logo" /> -->
 </div>
 
 <svelte:window onkeydown={selectHandle} />

@@ -1,0 +1,10 @@
+Libraries
+https://animate.style/ - CSS Animation Library
+https://howlerjs.com/ - Javascript Audio Library
+https://www.neodrag.dev/ - Draggable Elements
+
+Fonts
+Classic Console Neue (MIT License)
+PX Sans Nouveaux (MIT License)
+Ubuntu Mono (Ubuntu Font License)
+Fira Sans (SIL Open Font License)

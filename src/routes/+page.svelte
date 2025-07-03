@@ -1,5 +1,5 @@
-<script>
-	import { screenState } from '$lib/stores/stores.svelte';
+<script lang="ts">
+	import { screenState } from '$stores/stores.svelte.js';
 
 	import BootScreen from '$lib/screens/BootScreen.svelte';
 	import BootPrepare from '$lib/screens/BootPrepare.svelte';
@@ -7,6 +7,7 @@
 	import OperatingSystem from '$lib/screens/OperatingSystem.svelte';
 
 	// ? looks better than an if/else statement
+	// # haha imagine how poorly that aged
 
 	let screens = [BootScreen, BootPrepare, BootLaunch, OperatingSystem];
 

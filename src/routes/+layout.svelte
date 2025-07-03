@@ -1,5 +1,6 @@
 <script>
 	import '../app.scss';
+	import 'animate.css';
 
 	let { children } = $props();
 </script>

@@ -1,0 +1,18 @@
+// variables
+
+$border-9x:
+	inset 1px 1px white,
+	inset -1px -1px black,
+	inset 2px 2px #dfdfdf,
+	inset -2px -2px gray;
+
+$border-9x-invert:
+	inset -1px -1px white,
+	inset 1px 1px black,
+	inset -2px -2px #dfdfdf,
+	inset 2px 2px gray;
+
+// colors
+$primary-color: #f0985d;
+$secondary-color: #f0e961;
+$accent-color: #091d8d;
