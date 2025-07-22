@@ -34,6 +34,7 @@ interface ProgramMeta {
         title: string; 
         icon: string;
         scalable?: boolean;
+        systemTray?: boolean;
 }
 
 interface ProgramModule {
@@ -60,9 +61,11 @@ const programs: Record<string, () => Promise<ProgramModule>> = {};
 for (const path in programModules) {
         const match = path.match(/\.\/Programs\/(.*)\.svelte$/);
 	if (!match || !match[1]) continue;
-
+        
         const segments = match[1]?.split('/');
         const name = segments?.[segments.length - 1]?.toLowerCase();
+
+        console.log(`%c ${match}, "${segments}"`, 'background-color: black; color: white;')
         if (!name) continue;
 
 	programs[name] = async () => {
@@ -73,9 +76,6 @@ for (const path in programModules) {
                 };
 	};
 }
-
-
-
 
 export const windows: Program[] = $state([]);
 let nextID = 0;

@@ -1,19 +1,51 @@
 <script lang="ts">
-	import { focusWindow, minimizeRestoreWindow, removeWindow } from '$lib/index.svelte';
+	import { focusWindow, minimizeRestoreWindow, removeWindow, windows } from '$lib/index.svelte';
 	import { activeWindowState } from '$stores/stores.svelte';
 	import { draggable } from '@neodrag/svelte';
-	import { onMount } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
+
+	interface WindowProps {
+		windowID: number;
+		icon?: string | undefined;
+		title: string;
+		minimumSize?: {
+			h: number;
+			w: number;
+		};
+		initialPosition?: {
+			x: number;
+			y: number;
+		};
+		initialSize?: {
+			h: number;
+			w: number;
+		};
+		scalable?: boolean;
+		maximizeButton?: boolean;
+		minimizeButton?: boolean;
+		helpButton?: boolean;
+		animations?: boolean;
+		zIndex: number;
+		minimized: boolean;
+		body: Snippet;
+	}
 
 	let {
 		windowID = 0,
 		icon = undefined,
 		title = 'New window',
-		minH = 150,
-		minW = 150,
-		initialX = 30,
-		initialY = 30,
-		initialHeight = 320,
-		initialWidth = 480,
+		minimumSize = {
+			h: 150,
+			w: 150
+		},
+		initialPosition = {
+			x: 30,
+			y: 30
+		},
+		initialSize = {
+			h: 320,
+			w: 480
+		},
 		scalable = true,
 		maximizeButton = true,
 		minimizeButton = true,
@@ -22,18 +54,11 @@
 		zIndex = 0,
 		minimized = false,
 		body
-	} = $props();
+	}: WindowProps = $props();
 
-	// size and position of the window
-	let size = $state({
-		h: initialHeight,
-		w: initialWidth
-	});
+	let size = $state({ ...initialSize });
 
-	let position = $state({
-		x: initialX,
-		y: initialY
-	});
+	let position = $state({ ...initialPosition });
 
 	// resizing stuff
 	let resizing = $state(false);
@@ -45,7 +70,6 @@
 		startX = $state(0),
 		startY = $state(0);
 
-	// maximize state, untransition when being unmaximized
 	let maximized = $state(false);
 	let untransition = $state(false);
 
@@ -83,56 +107,56 @@
 		switch (directionDrag) {
 			case 'n':
 				newHeight = startHeight - dragY;
-				size.h = Math.max(newHeight, minH);
-				position.y = startY + Math.min(dragY, startHeight - minH);
+				size.h = Math.max(newHeight, minimumSize.h);
+				position.y = startY + Math.min(dragY, startHeight - minimumSize.h);
 				break;
 
 			case 'e':
 				newWidth = startWidth + dragX;
-				size.w = Math.max(newWidth, minW);
+				size.w = Math.max(newWidth, minimumSize.w);
 				break;
 
 			case 's':
 				newHeight = startHeight + dragY;
-				size.h = Math.max(newHeight, minH);
+				size.h = Math.max(newHeight, minimumSize.h);
 				break;
 
 			case 'w':
 				newWidth = startWidth - dragX;
-				size.w = Math.max(newWidth, minW);
-				position.x = startX + Math.min(dragX, startWidth - minW);
+				size.w = Math.max(newWidth, minimumSize.w);
+				position.x = startX + Math.min(dragX, startWidth - minimumSize.h);
 				break;
 
 			case 'ne':
 				newHeight = startHeight - dragY;
 				newWidth = startWidth + dragX;
-				size.h = Math.max(newHeight, minH);
-				size.w = Math.max(newWidth, minW);
-				position.y = startY + Math.min(dragY, startHeight - minH);
+				size.h = Math.max(newHeight, minimumSize.h);
+				size.w = Math.max(newWidth, minimumSize.w);
+				position.y = startY + Math.min(dragY, startHeight - minimumSize.h);
 				break;
 
 			case 'nw':
 				newHeight = startHeight - dragY;
 				newWidth = startWidth - dragX;
-				size.h = Math.max(newHeight, minH);
-				size.w = Math.max(newWidth, minW);
-				position.y = startY + Math.min(dragY, startHeight - minH);
-				position.x = startX + Math.min(dragX, startWidth - minW);
+				size.h = Math.max(newHeight, minimumSize.h);
+				size.w = Math.max(newWidth, minimumSize.w);
+				position.y = startY + Math.min(dragY, startHeight - minimumSize.h);
+				position.x = startX + Math.min(dragX, startWidth - minimumSize.w);
 				break;
 
 			case 'se':
 				newHeight = startHeight + dragY;
 				newWidth = startWidth + dragX;
-				size.h = Math.max(newHeight, minH);
-				size.w = Math.max(newWidth, minW);
+				size.h = Math.max(newHeight, minimumSize.h);
+				size.w = Math.max(newWidth, minimumSize.w);
 				break;
 
 			case 'sw':
 				newHeight = startHeight + dragY;
 				newWidth = startWidth - dragX;
-				size.h = Math.max(newHeight, minH);
-				size.w = Math.max(newWidth, minW);
-				position.x = startX + Math.min(dragX, startWidth - minW);
+				size.h = Math.max(newHeight, minimumSize.h);
+				size.w = Math.max(newWidth, minimumSize.w);
+				position.x = startX + Math.min(dragX, startWidth - minimumSize.w);
 				break;
 		}
 	}
@@ -151,7 +175,6 @@
 		}
 	}
 
-	// window close animations (picked at random)
 	let openAnim = $state([
 		'animate__bounceIn',
 		'animate__flipInX',
@@ -198,6 +221,11 @@
 				{ once: true }
 			);
 		}
+	});
+
+	$effect(() => {
+		// why can i do this? well, if it works, it works i guess
+		if (windows.length == 1) zIndex = 0;
 	});
 </script>
 

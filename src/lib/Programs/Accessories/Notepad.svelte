@@ -1,12 +1,12 @@
 <script module>
 	export const meta = {
 		title: 'Notepad',
-		icon: '/System/ImportantFiles/Shell/Icons/16x16/Notepad.png'
+		icon: '/System/ImportantFiles/Shell/Icons/16x16/Program/Notepad.png'
 	};
 </script>
 
 <script>
-	import Window from '$components/ui/Window.svelte';
+	import Window from '$components/ui/window/Window.svelte';
 	let { windowID, zIndex, minimized = false, content = '' } = $props();
 
 	let windowHeight = 400;
@@ -19,10 +19,8 @@
 	icon={meta.icon}
 	{zIndex}
 	{minimized}
-	initialX={(window.innerWidth - windowWidth) / 2}
-	initialY={(window.innerHeight - windowHeight) / 2}
-	initialHeight={windowHeight}
-	initialWidth={windowWidth}
+	initialPosition={{ x: (innerWidth - windowWidth) / 2, y: (innerHeight - windowHeight) / 2 }}
+	initialSize={{ h: windowHeight, w: windowWidth }}
 >
 	{#snippet body()}
 		<div class="notepad">

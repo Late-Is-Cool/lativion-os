@@ -7,8 +7,6 @@
 	import OperatingSystem from '$lib/screens/OperatingSystem.svelte';
 
 	// ? looks better than an if/else statement
-	// # haha imagine how poorly that aged
-
 	let screens = [BootScreen, BootPrepare, BootLaunch, OperatingSystem];
 
 	let ScreenComponent = $derived(screens[screenState.screen]);

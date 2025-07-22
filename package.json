@@ -1,5 +1,5 @@
 {
-	"name": "site-new",
+	"name": "lativion-os",
 	"private": true,
 	"version": "0.2.0",
 	"type": "module",
@@ -11,19 +11,12 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint .",
-		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"lint": "prettier --check . && eslint ."
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^4",
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
-		"@storybook/addon-a11y": "^9.0.9",
-		"@storybook/addon-docs": "^9.0.9",
-		"@storybook/addon-svelte-csf": "^5.0.3",
-		"@storybook/addon-vitest": "^9.0.9",
-		"@storybook/sveltekit": "^9.0.9",
 		"@sveltejs/adapter-auto": "^6.0.0",
 		"@sveltejs/adapter-static": "^3.0.8",
 		"@sveltejs/kit": "^2.16.0",
@@ -40,7 +33,6 @@
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"sass": "^1.89.2",
-		"storybook": "^9.0.9",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
 		"typescript": "^5.0.0",

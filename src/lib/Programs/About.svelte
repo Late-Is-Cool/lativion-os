@@ -6,7 +6,7 @@
 </script>
 
 <script>
-	import Window from '$components/ui/Window.svelte';
+	import Window from '$components/ui/window/Window.svelte';
 	import { newWindow, removeWindow } from '$lib/index.svelte';
 	import { onMount } from 'svelte';
 
@@ -24,11 +24,9 @@
 
 <Window
 	{windowID}
-	initialX={(window.innerWidth - windowWidth) / 2}
-	initialY={(window.innerHeight - windowHeight) / 2}
-	scalable={false}
-	initialHeight={windowHeight}
-	initialWidth={windowWidth}
+	initialPosition={{ x: (innerWidth - windowWidth) / 2, y: (innerHeight - windowHeight) / 2 }}
+	initialSize={{ h: windowHeight, w: windowWidth }}
+	scalable={meta.scalable}
 	minimizeButton={false}
 	maximizeButton={false}
 	animations={false}

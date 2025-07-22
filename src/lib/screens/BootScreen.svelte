@@ -140,7 +140,7 @@
 				{#if option?.toggleOpt}
 					<span
 						>[<span style="color: {option?.toggled ? 'lime' : 'red'}"
-							>{String(option?.toggled).toUpperCase()}</span
+							>{String(option?.toggled)?.toUpperCase()}</span
 						>]</span
 					>
 				{/if}

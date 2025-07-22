@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import {
 		activeWindowState,
@@ -8,15 +8,15 @@
 		positionCounterState,
 		programIconsSelect
 	} from '$stores/stores.svelte';
-	// components
+	// * components
 	import TaskApp from '$components/ui/TaskApp.svelte';
 	import ContextMenu from '$components/ui/ContextMenu.svelte';
 	import ContextMenuItem from '$components/ui/ContextMenuItem.svelte';
 	import ProgramIcon from '$components/ui/ProgramIcon.svelte';
-	// util
+	// * util
 	import { playSound } from '$lib/util/audio';
 	import { newWindow, windows } from '$lib/index.svelte';
-	//
+
 	// * stinking states
 	let overlay: boolean = $state(true);
 	let time: string = $state(
@@ -25,33 +25,42 @@
 			minute: '2-digit'
 		})
 	);
+
 	// * start menu
 	let startMenuToggle: boolean = $state(false);
 	let contextMenuToggle: boolean = $state(false);
 	let desktopSelect: boolean = $state(false);
-	// * context menu position
+
+	// * context menu
+	let contextMenuElement: HTMLElement;
 	let contextMenuX: number = $state(0),
 		contextMenuY: number = $state(0);
+
 	// * mouse positions
 	let startMouseX: number = $state(0),
 		startMouseY: number = $state(0);
+
 	// * selection
 	let selectionHeight: number = $state(0),
 		selectionWidth: number = $state(0);
 
 	// * functions
-	function contextMenuFunc(event: MouseEvent) {
+	async function contextMenuFunc(event: MouseEvent) {
 		event.preventDefault();
 
 		const target = event.target as HTMLElement;
-		if (!target?.classList.contains('operating-system_desktop')) {
-			contextMenuToggle = false;
-			return;
-		}
+		if (!target?.classList.contains('operating-system_desktop')) return;
 
 		contextMenuToggle = true;
+
+		await tick();
+
 		contextMenuX = event.clientX;
-		contextMenuY = Math.min(event.clientY, window.innerHeight - 31 - 46);
+		contextMenuY =
+			event.clientY >= innerHeight - contextMenuElement.offsetHeight - 31
+				? event.clientY - contextMenuElement.offsetHeight
+				: event.clientY;
+		console.log(event.clientY);
 	}
 
 	// ! lets all laugh at an indie dev who never learns anything teeheehee
@@ -93,6 +102,7 @@
 	$effect(() => {
 		if (windows.length === 1) windowZIndexState.windowZIndex = 0;
 		if (positionCounterState.positionCounter === 10) positionCounterState.positionCounter = 0;
+		console.log(contextMenuElement);
 	});
 
 	onMount(() => {
@@ -151,8 +161,10 @@
 					windowID={window.windowID}
 					zIndex={window.zIndex}
 					minimized={window.minimized}
-					initialX={30 + positionCounterState.positionCounter * 20}
-					initialY={60 + positionCounterState.positionCounter * 20}
+					initialPosition={{
+						x: 30 + positionCounterState.positionCounter * 20,
+						y: 60 + positionCounterState.positionCounter * 20
+					}}
 				/>
 			{/each}
 		</div>
@@ -182,13 +194,23 @@
 			/>
 			<span>Start</span>
 		</button>
-		<div class="taskbar_divider"></div>
+		<div class="divider-vertical"></div>
 		<div class="taskbar_programs">
 			{#each windows as window (window.windowID)}
 				<TaskApp windowID={window.windowID} title={window.meta?.title} icon={window.meta?.icon} />
 			{/each}
 		</div>
 		<div class="taskbar_system-tray">
+			{#each windows as window (window.windowID)}
+				{#if window.meta?.systemTray}
+					<img src={window.meta.icon} alt={window.meta.title} draggable="false" />
+				{/if}
+			{/each}
+			<img
+				src="/System/ImportantFiles/Shell/Icons/16x16/Volume{config.volume ? '' : '-Mute'}.png"
+				alt="Volume"
+				onclick={() => (config.volume = !config.volume)}
+			/>
 			<span>{time}</span>
 		</div>
 	</div>
@@ -205,7 +227,7 @@
 					<img src="/System/ImportantFiles/Shell/Icons/24x24/Settings.png" alt="Icon" />
 					<span>Settings</span>
 				</li>
-				<div class="start-menu_divider"></div>
+				<div class="divider-horizontal"></div>
 				<li class="start-menu_item">
 					<img src="/System/ImportantFiles/Shell/Icons/24x24/Help.png" alt="Icon" />
 					<span>Help</span>
@@ -214,7 +236,7 @@
 					<img src="/System/ImportantFiles/Shell/Icons/24x24/Run.png" alt="Icon" />
 					<span>Run...</span>
 				</li>
-				<div class="start-menu_divider"></div>
+				<div class="divider-horizontal"></div>
 				<li
 					class="start-menu_item"
 					onclick={() => {
@@ -240,7 +262,7 @@
 					<img src="/System/ImportantFiles/Shell/Icons/24x24/Shutdown.png" alt="Icon" />
 					<span>Shut Down...</span>
 				</li>
-				<div class="start-menu_divider"></div>
+				<div class="divider-horizontal"></div>
 				<li
 					class="start-menu_item"
 					onclick={() => {
@@ -256,29 +278,16 @@
 	{/if}
 	<!--* Context Menu -->
 	{#if contextMenuToggle}
-		<!-- <div class="context-menu" style="top: {contextMenuY}px; left: {contextMenuX}px">
-			<ul class="context-menu_container">
-				<li class="context-menu_item">Create File...</li>
-				<li class="context-menu_item">Create Folder...</li>
-			</ul>
-		</div> -->
-		<ContextMenu x={contextMenuX} y={contextMenuY}>
+		<ContextMenu x={contextMenuX} y={contextMenuY} bind:node={contextMenuElement}>
 			{#snippet items()}
-				<!-- <li class="context-menu_item">Create File...</li> -->
-				<!-- <li class="context-menu_item">Create Folder...</li> -->
-				<ContextMenuItem onclick={() => console.log('click')}>
-					{#snippet text()}
-						Create File...
-					{/snippet}
-				</ContextMenuItem>
+				<ContextMenuItem onclick={() => newWindow('eyes')} text="Create File..." />
 				<ContextMenuItem
 					onclick={() => console.log('cl1ck')}
 					icon="/System/ImportantFiles/Shell/Icons/16x16/debug-16.png"
-				>
-					{#snippet text()}
-						Create Folder...
-					{/snippet}
-				</ContextMenuItem>
+					text="Create Folder..."
+				/>
+				<div class="divider-horizontal"></div>
+				<ContextMenuItem onclick={() => newWindow('prompttest')} text="Properties" />
 			{/snippet}
 		</ContextMenu>
 	{/if}

@@ -6,21 +6,19 @@
 </script>
 
 <script>
-	import Window from '$components/ui/Window.svelte';
-	let { windowID, zIndex, minimized = false, initialX = 0, initialY = 0 } = $props();
+	import Window from '$components/ui/window/Window.svelte';
+	let { windowID, zIndex, minimized = false, initialPosition } = $props();
 </script>
 
 <Window
-	initialHeight={120}
-	initialWidth={150}
-	minH={120}
+	initialSize={{ h: 120, w: 150 }}
+	minimumSize={{ h: 120, w: 150 }}
 	{windowID}
 	title={meta.title}
 	icon={meta.icon}
 	{zIndex}
 	{minimized}
-	{initialX}
-	{initialY}
+	{initialPosition}
 >
 	{#snippet body()}
 		<div
