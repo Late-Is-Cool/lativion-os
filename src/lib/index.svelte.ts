@@ -65,7 +65,7 @@ for (const path in programModules) {
         const segments = match[1]?.split('/');
         const name = segments?.[segments.length - 1]?.toLowerCase();
 
-        console.log(`%c ${match}, "${segments}"`, 'background-color: black; color: white;')
+        // console.log(`%c ${match}, "${segments}"`, 'background-color: black; color: white;')
         if (!name) continue;
 
 	programs[name] = async () => {

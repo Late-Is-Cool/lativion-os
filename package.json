@@ -51,6 +51,6 @@
 		"modern-normalize": "^3.0.1"
 	},
 	"engines": {
-		"node": ">=20.0.0"
+		"node": ">=22.16.0"
 	}
 }

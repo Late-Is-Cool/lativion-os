@@ -24,11 +24,11 @@
 >
 	{#snippet body()}
 		<div class="notepad">
-			<div class="window_menubar">
+			<!-- <div class="window_menubar">
 				<button class="window_menubar_button">File</button>
 				<button class="window_menubar_button">Edit</button>
 				<button class="window_menubar_button">Help</button>
-			</div>
+			</div> -->
 			<textarea>{content}</textarea>
 		</div>
 	{/snippet}

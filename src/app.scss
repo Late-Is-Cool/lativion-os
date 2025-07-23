@@ -37,6 +37,7 @@
 	padding: 0;
 	border: 0 solid;
 	user-select: none;
+	overscroll-behavior: none;
 }
 
 ol,
@@ -491,6 +492,7 @@ a {
 
 	&_body {
 		flex-grow: 1;
+		overflow: hidden;
 	}
 
 	&_titlebar {

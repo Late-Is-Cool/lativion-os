@@ -280,7 +280,7 @@
 	{#if contextMenuToggle}
 		<ContextMenu x={contextMenuX} y={contextMenuY} bind:node={contextMenuElement}>
 			{#snippet items()}
-				<ContextMenuItem onclick={() => newWindow('eyes')} text="Create File..." />
+				<ContextMenuItem onclick={() => console.log('thing')} text="Create File..." />
 				<ContextMenuItem
 					onclick={() => console.log('cl1ck')}
 					icon="/System/ImportantFiles/Shell/Icons/16x16/debug-16.png"
