@@ -9,14 +9,14 @@
 	import Prompt from '$components/ui/Prompt.svelte';
 	import { newWindow, removeWindow } from '$lib/index.svelte';
 	import { activeWindowState } from '$stores/stores.svelte';
+	import { onMount } from 'svelte';
 
 	let { windowID, zIndex, minimized } = $props();
 
-	let active = $state(true);
+	let focus: HTMLButtonElement;
 
-	$effect(() => {
-		console.log(activeWindowState.activeWindow === windowID);
-		active = activeWindowState.activeWindow === windowID;
+	onMount(() => {
+		focus.focus();
 	});
 </script>
 
@@ -37,6 +37,7 @@
 	{/snippet}
 	{#snippet buttons()}
 		<button
+			bind:this={focus}
 			class="button"
 			onclick={() => {
 				removeWindow(windowID);
