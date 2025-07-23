@@ -12,6 +12,9 @@
 	<meta property="og:title" content="Lativion OS" />
 	<meta
 		name="description"
+		content="LateTheIdiot's awesome simulated website! Practically a portfolio with fun stuff (eventually)"
+	/>
+	<meta
 		property="og:description"
 		content="LateTheIdiot's awesome simulated website! Practically a portfolio with fun stuff (eventually)"
 	/>
