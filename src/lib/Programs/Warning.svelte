@@ -22,7 +22,7 @@
 >
 	{#snippet body()}
 		<div
-			style="color: black; font-size: 12px; display: flex; align-items: center; justify-content: center; height: 100%; overflow: hidden;"
+			style="color: black; font-size: 12px; display: flex; align-items: center; justify-content: center; height: 100%; overflow: scroll;"
 		>
 			<span
 				>Everything in this site is NOT FINAL.<br />Thank you for your understanding.

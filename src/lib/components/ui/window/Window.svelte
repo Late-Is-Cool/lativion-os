@@ -79,11 +79,9 @@
 
 	function startResize(event: MouseEvent) {
 		resizing = true;
-		if (
-			event.target instanceof HTMLElement &&
-			event.target.className.includes('window_resizable-handle_')
-		) {
-			const match = event.target.className.match(/window_resizable-handle_(ne|nw|se|sw|n|e|s|w)/);
+		let target = event.target as HTMLElement;
+		if (target.className.includes('window_resizable-handle_')) {
+			const match = target.className.match(/window_resizable-handle_(ne|nw|se|sw|n|e|s|w)/);
 			if (match) directionDrag = match[1];
 		}
 
@@ -124,7 +122,7 @@
 			case 'w':
 				newWidth = startWidth - dragX;
 				size.w = Math.max(newWidth, minimumSize.w);
-				position.x = startX + Math.min(dragX, startWidth - minimumSize.h);
+				position.x = startX + Math.min(dragX, startWidth - minimumSize.w);
 				break;
 
 			case 'ne':

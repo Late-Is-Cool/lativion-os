@@ -122,7 +122,7 @@
 		programIconsSelect.length = 0;
 	}}
 >
-	<!--* Desktop -->
+	<!-- * Desktop -->
 	<div class="operating-system_desktop" onmousedown={selectionBoxHandlerDown}>
 		<div
 			class="selection-box"
@@ -150,6 +150,12 @@
 				name="Oneko"
 				icon="/System/ImportantFiles/Shell/Icons/32x32/Oneko.png"
 				program="oneko"
+				shortcut
+			/>
+			<ProgramIcon
+				name="Blog"
+				icon="/System/ImportantFiles/Shell/Icons/32x32/Oneko.png"
+				program="blog"
 				shortcut
 			/>
 		</div>
@@ -282,7 +288,7 @@
 			{#snippet items()}
 				<ContextMenuItem onclick={() => console.log('thing')} text="Create File..." />
 				<ContextMenuItem
-					onclick={() => console.log('cl1ck')}
+					onclick={() => newWindow('testprogram')}
 					icon="/System/ImportantFiles/Shell/Icons/16x16/debug-16.png"
 					text="Create Folder..."
 				/>

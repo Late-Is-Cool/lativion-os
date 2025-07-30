@@ -60,7 +60,7 @@
 					And I had a lot of fun doing it! :)<br /> -->
 				</p>
 				<div class="about_links">
-					<a class="link" href="#" onclick={() => newWindow('notepad', { content: credits })}>
+					<a class="link" href={'#'} onclick={() => newWindow('notepad', { content: credits })}>
 						View Credits
 					</a>
 				</div>

@@ -60,7 +60,7 @@ a {
 	height: 100%;
 	width: 100%;
 	font-family: 'Classic Console Neue';
-	font-size: toRem(20);
+	font-size: 20px;
 
 	position: absolute;
 	top: 0;
@@ -73,14 +73,14 @@ a {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		padding-inline: toRem(400);
-		gap: toRem(16);
+		padding-inline: 400px;
+		gap: 16px;
 	}
 
 	&_title {
 		background-color: silver;
 		align-self: center;
-		padding-inline: toRem(12);
+		padding-inline: 12px;
 	}
 }
 
@@ -89,11 +89,11 @@ a {
 	color: white;
 	height: 100%;
 	width: 100%;
-	padding: 1.5rem;
+	padding: 24px;
 
 	font-family: 'Classic Console Neue';
-	font-size: 1.25rem;
-	line-height: 1.75rem;
+	font-size: 20px;
+	line-height: 28px;
 
 	position: absolute;
 	top: 0;
@@ -105,14 +105,14 @@ a {
 
 	&_title {
 		display: flex;
-		gap: 1.25rem;
+		gap: 20px;
 	}
 
 	&_optionsContainer {
-		margin-block: 2rem;
+		margin-block: 32px;
 		height: calc(100% * 2 / 3);
 		width: 100%;
-		padding: 0.5rem;
+		padding: 8px;
 		border: 2px solid white;
 		&:hover {
 			cursor: pointer;
@@ -121,8 +121,8 @@ a {
 
 	&_option {
 		display: flex;
-		gap: 0.25rem;
-		padding-inline: 1rem;
+		gap: 4px;
+		padding-inline: 16px;
 	}
 
 	&_optionSelect {
@@ -140,11 +140,12 @@ a {
 	color: white;
 	height: 100%;
 	width: 100%;
-	padding: 1.5rem;
+	padding: 24px;
+	cursor: none;
 
 	font-family: 'Classic Console Neue';
-	font-size: 1.25rem;
-	line-height: 1.75rem;
+	font-size: 20px;
+	line-height: 28px;
 
 	position: absolute;
 	top: 0;
@@ -155,7 +156,7 @@ a {
 	&_message {
 		display: flex;
 		flex-direction: row;
-		gap: 0.5rem;
+		gap: 8px;
 	}
 }
 
@@ -164,11 +165,8 @@ a {
 	color: white;
 	height: 100%;
 	width: 100%;
-	padding: 1.5rem;
-
-	font-family: 'Classic Console Neue';
-	font-size: 1.25rem;
-	line-height: 1.75rem;
+	padding: 24px;
+	cursor: none;
 
 	position: absolute;
 	top: 0;
@@ -179,15 +177,15 @@ a {
 	justify-content: center;
 
 	&_logo {
-		margin-bottom: 6rem;
+		margin-bottom: 112px;
 	}
 
 	&_otherlogo {
 		position: absolute;
 		bottom: 0;
 		right: 0;
-		margin-right: 50px;
-		margin-bottom: 50px;
+		margin-right: 60px;
+		margin-bottom: 60px;
 
 		img {
 			height: 25px;
@@ -224,7 +222,7 @@ a {
 	background-color: silver;
 	font-size: 8px;
 	width: 100%;
-	padding: 0.25rem;
+	padding: 4px;
 
 	box-shadow: $border-9x;
 
@@ -238,7 +236,7 @@ a {
 
 	&_start-button {
 		background-color: silver;
-		min-height: 23px;
+		min-height: 24px;
 		margin-right: 2px;
 		padding-inline: 6px;
 		padding-block: 2px;
@@ -246,7 +244,7 @@ a {
 		box-shadow: $border-9x;
 
 		display: inline-flex;
-		gap: 0.25rem;
+		gap: 4px;
 
 		& img {
 			height: 16px;
@@ -256,7 +254,6 @@ a {
 
 		& span {
 			align-self: center;
-			line-height: 16px;
 			letter-spacing: 1px;
 			text-shadow: 1px 0;
 		}
@@ -272,12 +269,11 @@ a {
 		overflow-x: auto;
 		display: flex;
 		flex-direction: row;
-		gap: 3px;
+		gap: 4px;
 	}
 
 	&_system-tray {
-		min-height: 23px;
-		padding-inline: 0.5rem;
+		padding-inline: 8px;
 
 		display: flex;
 		align-items: center;
@@ -296,7 +292,7 @@ a {
 	padding: 2px;
 
 	position: fixed;
-	bottom: 31px;
+	bottom: 32px;
 
 	display: flex;
 	flex-direction: row;
@@ -408,8 +404,8 @@ a {
 
 .selection-box {
 	position: absolute;
-	background-color: rgba(0,0,0,0.2);
-	border: 1px dotted black;
+	background-color: rgba($accent-color, 0.2);
+	border: 1px dotted $accent-color;
 	z-index: 5;
 }
 
@@ -446,7 +442,7 @@ a {
 	background-color: silver;
 	min-height: 23px;
 	min-width: 75px;
-	padding-inline: 0.75rem;
+	padding-inline: 12px;
 	font-size: 8px;
 	line-height: 1.35;
 	text-align: center;
@@ -521,7 +517,7 @@ a {
 			white-space: nowrap;
 			margin-left: 4px;
 			text-shadow: -1px 0;
-			line-height: 1rem;
+			line-height: 16px;
 			flex: 1;
 		}
 
