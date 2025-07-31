@@ -1,38 +1,57 @@
-# sv
+# ![Lativion OS](github/Lativion%20OS%20Brand%20GITHUB.png)
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A Simulated Operating System in the Web
 
-## Creating a project
+![Lativion OS Preview Image](github/preview.png)
 
-If you're seeing this, you've probably already done this step. Congrats!
+# What is Lativion OS? Is it a real operating system?
+Lativion OS is a **fake** *simulated* operating system that uses the Svelte framework and SvelteKit. I wanted to make a website after taking a haitus of programming sites. But I didn't want to make a bland old boring portfolio site. I wanted Pizzazz! So, came this, proud of the result so far! Lots more to come though!
 
-```bash
-# create a new project in the current directory
-npx sv create
+# Sounds cool! May I use this for my website as well?
+Honestly? Go for it, I would not recommend using this repository right now. But I will make a separate template repository so it will be easier.
 
-# create a new project in my-app
-npx sv create my-app
-```
+ Now here comes the boring stuff...
 
-## Developing
+# Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Make sure you install Node.JS (perferably version >=22) and Git.
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+$ git clone https://github.com/Late-Is-Cool/lativion-os.git
+$ cd lativion-os
+# npm, yarn, pnpm, whatever suites your needs
+$ npm install
 ```
 
-## Building
-
-To create a production version of your app:
+After you cloned the repository and installed the dependencies using your node package manager, It's time to start the dev server!
 
 ```bash
-npm run build
+$ npm run dev
+
+# or use this if you want to open it in a new browser tab
+$ npm run dev -- --open
 ```
 
-You can preview the production build with `npm run preview`.
+Any changes you make while the server is running will automatically update.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+# Building
+
+Feel like you done enough work and it's good for potentially prod? Build it!
+
+```bash
+$ npm run build
+```
+
+Then you can preview your build by running `npm run preview` or actually use it for production by doing `node build/index.js`
+
+# How can I contribute to this wonderful project?
+
+Many things actually, sharing my website online will do a bunch! (please don't DDOS it...)
+
+If you want more things on my site, you can fork this repository and make your changes.
+
+Making programs may be difficult in the current state of this project. But hopefully I can refactor a bunch of things (especially windows)
+
+# Is there an active dev log currently?
+
+Soon to be on https://blog.latetheidiot.dev/lativion-os

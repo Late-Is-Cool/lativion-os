@@ -152,12 +152,12 @@
 				program="oneko"
 				shortcut
 			/>
-			<ProgramIcon
+			<!-- <ProgramIcon
 				name="Blog"
 				icon="/System/ImportantFiles/Shell/Icons/32x32/Oneko.png"
 				program="blog"
 				shortcut
-			/>
+			/> -->
 		</div>
 		<div>
 			{#each windows as window (window.windowID)}
