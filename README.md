@@ -1,4 +1,6 @@
-# ![Lativion OS](github/Lativion%20OS%20Brand%20GITHUB.png)
+![Lativion OS](github/Lativion%20OS%20Brand%20GITHUB.png)
+
+# Lativion OS
 
 A Simulated Operating System in the Web
 
@@ -55,3 +57,7 @@ Making programs may be difficult in the current state of this project. But hopef
 # Is there an active dev log currently?
 
 Soon to be on https://blog.latetheidiot.dev/lativion-os
+
+---
+
+![LateTheIdiot](static/System/ImportantFiles/Brand/LativionOS-Outline.png)
