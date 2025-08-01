@@ -285,12 +285,12 @@
 			{#snippet items()}
 				<ContextMenuItem onclick={() => console.log('thing')} text="Create File..." />
 				<ContextMenuItem
-					onclick={() => newWindow('browser')}
+					onclick={() => console.log('thing2')}
 					icon="/System/ImportantFiles/Shell/Icons/16x16/debug-16.png"
 					text="Create Folder..."
 				/>
 				<div class="divider-horizontal"></div>
-				<ContextMenuItem onclick={() => newWindow('hydra')} text="Properties" />
+				<ContextMenuItem onclick={() => console.log('thing3')} text="Properties" />
 			{/snippet}
 		</ContextMenu>
 	{/if}
