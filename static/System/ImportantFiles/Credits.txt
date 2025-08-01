@@ -8,3 +8,6 @@ Classic Console Neue (MIT License)
 PX Sans Nouveaux (MIT License)
 Ubuntu Mono (Ubuntu Font License)
 Fira Sans (SIL Open Font License)
+
+Other:
+https://github.com/adryd325/oneko.js/ - Original JS Oneko for reference to porting it into Svelte

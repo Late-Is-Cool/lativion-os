@@ -21,8 +21,6 @@
 				text: 'Setting localtime to the hardware clock...',
 				status: 'ok',
 				func() {
-					console.log('func');
-					// completely useless try catch, but it looked cool
 					time = new Date().toLocaleTimeString(window.navigator.language || 'en-US', {
 						hour: 'numeric',
 						minute: '2-digit'

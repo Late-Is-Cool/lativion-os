@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { onMount, type Snippet } from 'svelte';
-	import Window from './window/Window.svelte';
+	import { getContext, onMount, type Snippet } from 'svelte';
+	import { Window } from '$components/ui/window';
 	import { playSound } from '$lib/util/audio';
+	import { removeWindow } from '$lib/index.svelte';
 
 	interface Props {
 		content: Snippet;
@@ -12,6 +13,7 @@
 		title: string;
 		initialPosition: { x: number; y: number };
 		minimized: boolean;
+		onClose?: () => void;
 	}
 
 	let {
@@ -22,7 +24,8 @@
 		zIndex,
 		title,
 		initialPosition = { x: (innerWidth - 375) / 2, y: innerHeight / -120 / 2 },
-		minimized
+		minimized,
+		onClose = () => removeWindow(windowID)
 	}: Props = $props();
 
 	type Icon = 'Error' | 'Warning' | 'Info' | 'Help';
@@ -36,19 +39,19 @@
 	});
 </script>
 
-<Window
+<Window.Root
 	initialSize={{ h: 120, w: 375 }}
 	scalable={false}
-	minimizeButton={false}
-	maximizeButton={false}
 	animations={false}
 	{initialPosition}
 	{windowID}
 	{zIndex}
-	{title}
 	{minimized}
 >
-	{#snippet body()}
+	<Window.TitleBar {title}>
+		<Window.CloseButton onclick={onClose} />
+	</Window.TitleBar>
+	<Window.Body>
 		<div class="prompt">
 			<div class="prompt_icon">
 				<img src="/System/ImportantFiles/Shell/Icons/32x32/{icon}.png" draggable="false" />
@@ -58,8 +61,8 @@
 				{@render buttons()}
 			</div>
 		</div>
-	{/snippet}
-</Window>
+	</Window.Body>
+</Window.Root>
 
 <style lang="scss">
 	.prompt {

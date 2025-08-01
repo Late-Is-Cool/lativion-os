@@ -6,23 +6,26 @@
 </script>
 
 <script>
-	import Window from '$components/ui/window/Window.svelte';
+	import { Window } from '$components/ui/window';
 	let { windowID, zIndex, minimized = false, content = '' } = $props();
 
 	let windowHeight = 400;
 	let windowWidth = 650;
 </script>
 
-<Window
+<Window.Root
 	{windowID}
-	title={meta.title}
-	icon={meta.icon}
 	{zIndex}
 	{minimized}
 	initialPosition={{ x: (innerWidth - windowWidth) / 2, y: (innerHeight - windowHeight) / 2 }}
 	initialSize={{ h: windowHeight, w: windowWidth }}
 >
-	{#snippet body()}
+	<Window.TitleBar title={meta.title} icon={meta.icon}>
+		<Window.MinimizeButton />
+		<Window.MaximizeButton />
+		<Window.CloseButton />
+	</Window.TitleBar>
+	<Window.Body>
 		<div class="notepad">
 			<!-- <div class="window_menubar">
 				<button class="window_menubar_button">File</button>
@@ -31,8 +34,8 @@
 			</div> -->
 			<textarea>{content}</textarea>
 		</div>
-	{/snippet}
-</Window>
+	</Window.Body>
+</Window.Root>
 
 <style lang="scss">
 	@use '../../../styles/variables.scss' as *;

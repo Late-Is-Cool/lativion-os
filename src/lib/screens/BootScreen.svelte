@@ -100,8 +100,6 @@
 			case 'Enter':
 				selectOption();
 		}
-
-		console.log(event.key, select);
 	}
 
 	function selectOption() {

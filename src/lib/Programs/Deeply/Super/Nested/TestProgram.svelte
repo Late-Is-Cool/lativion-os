@@ -1,11 +1,12 @@
 <script lang="ts">
-	import Window from '$components/ui/window/Window.svelte';
+	import { Window } from '$components/ui/window';
 
 	let { windowID, zIndex, minimized } = $props();
 </script>
 
-<Window {windowID} {zIndex} {minimized} title="test">
-	{#snippet body()}
-		yah
-	{/snippet}
-</Window>
+<Window.Root {windowID} {zIndex} {minimized}>
+	<Window.TitleBar title="test">
+		<Window.CloseButton />
+	</Window.TitleBar>
+	<Window.Body>yah</Window.Body>
+</Window.Root>

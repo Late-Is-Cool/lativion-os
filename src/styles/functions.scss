@@ -1,5 +1,0 @@
-// this puts the fun in function
-
-@function toRem($value) {
-	@return calc($value / 16) + rem;
-}

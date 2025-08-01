@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="64.393852mm"
+   height="68.794685mm"
+   viewBox="0 0 64.393852 68.794685"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1" /><g
+     id="layer1"
+     transform="translate(-13.62237,-9.9722874)"><path
+       style="fill:#f0e961;fill-opacity:1;stroke:#000000;stroke-width:3.64164;stroke-linejoin:round;stroke-dasharray:none"
+       id="path5"
+       d="M 77.201056,85.368143 57.558491,93.50436 37.915926,85.368143 29.779709,65.725578 l 8.136217,-19.642565 19.642565,-8.136217 19.642565,8.136217 8.136217,19.642565 z"
+       transform="matrix(0.40256759,1.0219773,-1.0219773,0.40256759,88.010521,-37.224608)" /><path
+       style="fill:#ffffff;stroke:#000000;stroke-width:6.11991;stroke-linejoin:miter;stroke-dasharray:none"
+       id="path1"
+       d="M 53.579645,70.812978 32.757491,65.233699 48.000366,49.990825 Z"
+       transform="matrix(0.65350444,0.01140696,-0.01140696,0.65350444,2.6837697,3.0246729)" /><circle
+       style="fill:#5dbff2;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linejoin:round;stroke-dasharray:none"
+       id="path2"
+       cx="58.136841"
+       cy="43.188641"
+       r="7.8184476"
+       transform="rotate(0.99999926)" /><rect
+       style="fill:#5df27d;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;paint-order:normal"
+       id="rect2"
+       width="11.113215"
+       height="11.113215"
+       x="23.314146"
+       y="67.972916"
+       ry="0.072913229"
+       transform="rotate(-14)" /><path
+       style="fill:#f0985d;fill-opacity:1;stroke:#000000;stroke-width:3.71865;stroke-linejoin:round;stroke-dasharray:none"
+       id="path3"
+       d="m 48.224385,44.473442 -10.467544,4.660451 -7.667001,-8.515067 5.729077,-9.923052 11.207765,2.382284 z"
+       transform="matrix(1.0756094,0.01877483,-0.0187709,1.0753839,-15.344197,-21.710183)" /><path
+       style="fill:#f05d67;fill-opacity:1;stroke:#000000;stroke-width:3.82;stroke-linejoin:round;stroke-dasharray:none"
+       id="path4"
+       d="m 83.978199,93.778538 -8.253537,-2.211528 -2.211529,-8.253537 6.042008,-6.042008 8.253537,2.211528 2.211529,8.253537 z"
+       transform="matrix(1.0469608,0.01827477,-0.01827477,1.0469608,-16.628017,-22.950141)" /></g></svg>

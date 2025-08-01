@@ -94,7 +94,6 @@ export async function newWindow(programName: string, props = {}): Promise<void> 
 }
 
 export function removeWindow(windowID: number): void {
-        
         const index = windows.findIndex( w => w.windowID === windowID);
         if (index !== -1) windows.splice(index, 1);
 }

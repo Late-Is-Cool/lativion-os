@@ -1,6 +1,5 @@
 @use '/node_modules/modern-normalize/modern-normalize.css';
 @use './styles/variables.scss' as *;
-@use './styles/functions.scss' as *;
 
 // ! welcome to flexbox hell.
 // * can you tell i only use flexbox instead of other display methods like grid? ha... ha...
@@ -38,6 +37,10 @@
 	border: 0 solid;
 	user-select: none;
 	overscroll-behavior: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }
 
 ol,
@@ -523,7 +526,7 @@ a {
 
 		&_button-container {
 			display: flex;
-			flex-direction: row-reverse;
+			flex-direction: row;
 			align-self: center;
 		}
 
@@ -715,6 +718,7 @@ a {
 		text-shadow: 1px 1px black;
 		padding: 1px 3px 3px 3px;
 		border: 1px dashed (rgba($color: #000000, $alpha: 0));
+		text-align: center;
 	}
 
 	&_select {

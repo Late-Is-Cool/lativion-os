@@ -1,13 +1,10 @@
 <script lang="ts">
-	import { focusWindow, minimizeRestoreWindow, removeWindow, windows } from '$lib/index.svelte';
-	import { activeWindowState } from '$stores/stores.svelte';
+	import { focusWindow, removeWindow, windows } from '$lib/index.svelte';
 	import { draggable } from '@neodrag/svelte';
-	import { onMount, type Snippet } from 'svelte';
+	import { onMount, setContext, type Snippet } from 'svelte';
 
 	interface WindowProps {
 		windowID: number;
-		icon?: string | undefined;
-		title: string;
 		minimumSize?: {
 			h: number;
 			w: number;
@@ -21,19 +18,14 @@
 			w: number;
 		};
 		scalable?: boolean;
-		maximizeButton?: boolean;
-		minimizeButton?: boolean;
-		helpButton?: boolean;
 		animations?: boolean;
 		zIndex: number;
 		minimized: boolean;
-		body: Snippet;
+		children: Snippet;
 	}
 
 	let {
 		windowID = 0,
-		icon = undefined,
-		title = 'New window',
 		minimumSize = {
 			h: 150,
 			w: 150
@@ -47,13 +39,10 @@
 			w: 480
 		},
 		scalable = true,
-		maximizeButton = true,
-		minimizeButton = true,
-		helpButton = false,
 		animations = true,
 		zIndex = 0,
 		minimized = false,
-		body
+		children
 	}: WindowProps = $props();
 
 	let size = $state({ ...initialSize });
@@ -206,6 +195,13 @@
 		}
 	}
 
+	setContext('window', {
+		windowID,
+		maximized: () => maximized,
+		closeWindow,
+		handleMaximize
+	});
+
 	onMount(() => {
 		if (animations) {
 			const randAnim = openAnim[Math.floor(Math.random() * openAnim.length)];
@@ -254,52 +250,7 @@
 	}}
 	bind:this={windowElement}
 >
-	<div
-		class="window_titlebar"
-		class:window_titlebar_active={activeWindowState.activeWindow === windowID}
-		class:drag={!maximized}
-		ondblclick={(event) => {
-			if (
-				(event.target instanceof HTMLElement &&
-					event.target.classList.contains('window_titlebar_title')) ||
-				event.target === event.currentTarget
-			)
-				handleMaximize();
-		}}
-	>
-		{#if icon}
-			<img
-				src={icon}
-				alt="icon"
-				class="window_titlebar_icon"
-				draggable="false"
-				ondblclick={closeWindow}
-			/>
-		{/if}
-		<span class="window_titlebar_title">{title}</span>
-		<div class="window_titlebar_button-container">
-			<button class="nodrag window_titlebar_close" onclick={closeWindow}></button>
-			{#if maximizeButton}
-				<button
-					class="nodrag window_titlebar_{maximized ? 'maxxed' : 'maximize'}"
-					disabled={!scalable}
-					onclick={handleMaximize}
-				></button>
-			{/if}
-			{#if minimizeButton}
-				<button
-					class="nodrag window_titlebar_minimize"
-					onclick={() => minimizeRestoreWindow(windowID)}
-				></button>
-			{/if}
-			{#if helpButton}
-				<button class="nodrag window_titlebar_help"></button>
-			{/if}
-		</div>
-	</div>
-	<div class="window_body">
-		{@render body()}
-	</div>
+	{@render children?.()}
 	{#if scalable && !maximized}
 		{#each directions as direction}
 			<div

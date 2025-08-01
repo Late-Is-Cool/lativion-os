@@ -60,7 +60,6 @@
 			event.clientY >= innerHeight - contextMenuElement.offsetHeight - 31
 				? event.clientY - contextMenuElement.offsetHeight
 				: event.clientY;
-		console.log(event.clientY);
 	}
 
 	// ! lets all laugh at an indie dev who never learns anything teeheehee
@@ -102,7 +101,6 @@
 	$effect(() => {
 		if (windows.length === 1) windowZIndexState.windowZIndex = 0;
 		if (positionCounterState.positionCounter === 10) positionCounterState.positionCounter = 0;
-		console.log(contextMenuElement);
 	});
 
 	onMount(() => {
@@ -152,12 +150,11 @@
 				program="oneko"
 				shortcut
 			/>
-			<!-- <ProgramIcon
-				name="Blog"
-				icon="/System/ImportantFiles/Shell/Icons/32x32/Oneko.png"
-				program="blog"
-				shortcut
-			/> -->
+			<ProgramIcon
+				name="Not a virus :)"
+				icon="/System/ImportantFiles/Shell/Icons/32x32/Text.png"
+				program="hydra"
+			/>
 		</div>
 		<div>
 			{#each windows as window (window.windowID)}
@@ -288,12 +285,12 @@
 			{#snippet items()}
 				<ContextMenuItem onclick={() => console.log('thing')} text="Create File..." />
 				<ContextMenuItem
-					onclick={() => newWindow('testprogram')}
+					onclick={() => newWindow('browser')}
 					icon="/System/ImportantFiles/Shell/Icons/16x16/debug-16.png"
 					text="Create Folder..."
 				/>
 				<div class="divider-horizontal"></div>
-				<ContextMenuItem onclick={() => newWindow('prompttest')} text="Properties" />
+				<ContextMenuItem onclick={() => newWindow('hydra')} text="Properties" />
 			{/snippet}
 		</ContextMenu>
 	{/if}

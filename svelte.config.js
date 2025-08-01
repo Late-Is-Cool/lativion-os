@@ -32,7 +32,6 @@ const config = {
 					sass: {
 						additionalData: `
 							@import './src/styles/variables.scss
-							@import './src/styles/functions.scss
 						`
 					}
 				}

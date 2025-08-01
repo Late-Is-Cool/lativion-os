@@ -6,7 +6,7 @@
 </script>
 
 <script>
-	import Window from '$components/ui/window/Window.svelte';
+	import { Window } from '$components/ui/window';
 	import { newWindow, removeWindow } from '$lib/index.svelte';
 	import { onMount } from 'svelte';
 
@@ -18,23 +18,23 @@
 	let credits = $state('');
 
 	onMount(async () => {
-		credits = await fetch('/System/Users/User/Documents/Credits.txt').then((res) => res.text());
+		credits = await fetch('/System/ImportantFiles/Credits.txt').then((res) => res.text());
 	});
 </script>
 
-<Window
+<Window.Root
 	{windowID}
 	initialPosition={{ x: (innerWidth - windowWidth) / 2, y: (innerHeight - windowHeight) / 2 }}
 	initialSize={{ h: windowHeight, w: windowWidth }}
 	scalable={meta.scalable}
-	minimizeButton={false}
-	maximizeButton={false}
 	animations={false}
-	title={meta.title}
 	{zIndex}
 	{minimized}
 >
-	{#snippet body()}
+	<Window.TitleBar title={meta.title}>
+		<Window.CloseButton />
+	</Window.TitleBar>
+	<Window.Body>
 		<div class="about">
 			<div class="about_brand">
 				<img
@@ -55,22 +55,23 @@
 				<p>
 					LateTheIdiot Lativion OS<br />
 					Version (Most Recent Good Version)<br />
-					<!-- <br />
+					<br />
 					This was just a fun summer project.<br />
-					And I had a lot of fun doing it! :)<br /> -->
+					And I had a lot of fun doing it! :)<br />
 				</p>
 				<div class="about_links">
 					<a class="link" href={'#'} onclick={() => newWindow('notepad', { content: credits })}>
 						View Credits
 					</a>
+					<a class="link" href="https://github.com/Late-Is-Cool/lativion-os">Source Code</a>
 				</div>
 			</div>
 			<div class="about_buttons">
 				<button class="button" onclick={() => removeWindow(windowID)}>OK</button>
 			</div>
 		</div>
-	{/snippet}
-</Window>
+	</Window.Body>
+</Window.Root>
 
 <style lang="scss">
 	.about {
@@ -118,5 +119,8 @@
 
 	.about_links {
 		margin-top: 20px;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
 	}
 </style>
