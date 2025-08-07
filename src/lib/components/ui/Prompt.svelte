@@ -41,7 +41,6 @@
 
 <Window.Root
 	initialSize={{ h: 120, w: 375 }}
-	scalable={false}
 	animations={false}
 	{initialPosition}
 	{windowID}
@@ -54,7 +53,10 @@
 	<Window.Body>
 		<div class="prompt">
 			<div class="prompt_icon">
-				<img src="/System/ImportantFiles/Shell/Icons/32x32/{icon}.png" draggable="false" />
+				<img
+					src="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/{icon}.png"
+					draggable="false"
+				/>
 			</div>
 			<div class="prompt_content">{@render content()}</div>
 			<div class="prompt_buttons">

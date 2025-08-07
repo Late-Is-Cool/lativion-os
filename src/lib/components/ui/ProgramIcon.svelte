@@ -34,7 +34,7 @@
 		{#if shortcut}
 			<img
 				class="program-icon_shortcut"
-				src="/System/ImportantFiles/Shell/shortcut.png"
+				src="/System/ImportantFiles/Shell/Themes/9x/shortcut.png"
 				alt="{name} Icon"
 				draggable="false"
 			/>

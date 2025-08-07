@@ -1,12 +1,14 @@
 <script module>
 	export const meta = {
 		title: 'Notepad',
-		icon: '/System/ImportantFiles/Shell/Icons/16x16/Program/Notepad.png'
+		icon: '/System/ImportantFiles/Shell/Themes/9x/Icons/16x16/Program/Notepad.png'
 	};
 </script>
 
 <script>
 	import { Window } from '$components/ui/window';
+	import { ContextMenu } from '$components/ui/context-menu/index';
+
 	let { windowID, zIndex, minimized = false, content = '' } = $props();
 
 	let windowHeight = 400;
@@ -25,6 +27,19 @@
 		<Window.MaximizeButton />
 		<Window.CloseButton />
 	</Window.TitleBar>
+	<Window.TabList>
+		<Window.TabListItem text="File">
+			<!-- <ContextMenu.Root x={0} y={50}>
+				<ContextMenu.Item text="Open File" onclick={() => {}} />
+			</ContextMenu.Root> -->
+		</Window.TabListItem>
+		<Window.TabListItem text="Edit">
+			<!-- <ContextMenu.Root x={0} y={50}>
+				<ContextMenu.Item text="Open File" onclick={() => {}} />
+			</ContextMenu.Root> -->
+		</Window.TabListItem>
+		<Window.TabListItem text="Help" />
+	</Window.TabList>
 	<Window.Body>
 		<div class="notepad">
 			<!-- <div class="window_menubar">
@@ -35,6 +50,8 @@
 			<textarea>{content}</textarea>
 		</div>
 	</Window.Body>
+	<Window.Footer>Untitled</Window.Footer>
+	<Window.Scalable />
 </Window.Root>
 
 <style lang="scss">
@@ -44,14 +61,10 @@
 		height: 100%;
 		width: 100%;
 
-		display: flex;
-		flex-direction: column;
-
 		textarea {
 			width: 100%;
 			height: inherit;
 			resize: none;
-			padding: 2px;
 
 			font-family: 'Ubuntu Mono';
 			line-height: 1;

@@ -44,7 +44,8 @@
 		]
 	},
 	"dependencies": {
-		"@neodrag/svelte": "^2.3.3",
+		"@friendofsvelte/state": "0.0.6-ts",
+		"@neodrag/svelte": "2.3.3",
 		"@types/howler": "^2.2.12",
 		"animate.css": "^4.1.1",
 		"howler": "^2.2.4",

@@ -3,7 +3,7 @@
 
 	export const meta = {
 		title: 'Eyes',
-		icon: '/System/ImportantFiles/Shell/Icons/16x16/Program/Eyes.png',
+		icon: '/System/ImportantFiles/Shell/Themes/9x/Icons/16x16/Program/Eyes.png',
 		scalable: false
 	};
 </script>

@@ -5,6 +5,7 @@
 	import BootPrepare from '$lib/screens/BootPrepare.svelte';
 	import BootLaunch from '$lib/screens/BootLaunch.svelte';
 	import OperatingSystem from '$lib/screens/OperatingSystem.svelte';
+	import Shutdown from '$screens/Shutdown.svelte';
 
 	// ? looks better than an if/else statement
 	let screens = [BootScreen, BootPrepare, BootLaunch, OperatingSystem];

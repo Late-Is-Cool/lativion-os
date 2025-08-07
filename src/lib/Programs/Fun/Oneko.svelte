@@ -1,8 +1,9 @@
 <script module>
 	export const meta = {
 		title: 'Oneko',
-		icon: '/System/ImportantFiles/Shell/Icons/16x16/Program/Oneko.png',
-		systemTray: true
+		icon: '/System/ImportantFiles/Shell/Themes/9x/Icons/16x16/Program/Oneko.png',
+		systemTray: true,
+		taskApp: false
 	};
 </script>
 

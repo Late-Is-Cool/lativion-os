@@ -3,12 +3,13 @@
 	import { getContext, type Snippet } from 'svelte';
 
 	interface TitlebarProps {
-		icon?: string;
 		title: string;
+		icon?: string;
+		draggable?: boolean;
 		children: Snippet;
 	}
 
-	let { icon, title = 'New Window', children }: TitlebarProps = $props();
+	let { title = 'New Window', icon, draggable = true, children }: TitlebarProps = $props();
 
 	let windowContext = getContext<WindowContext>('window');
 </script>
@@ -16,7 +17,7 @@
 <div
 	class="window_titlebar"
 	class:window_titlebar_active={activeWindowState.activeWindow === windowContext.windowID}
-	class:drag={!windowContext.maximized()}
+	class:drag={draggable && !windowContext.maximized()}
 	ondblclick={(event) => {
 		if (
 			(event.target instanceof HTMLElement &&
@@ -37,10 +38,15 @@
 	{/if}
 	<span class="window_titlebar_title">{title}</span>
 	<div class="window_titlebar_button-container">
-		<!--
-			{#if helpButton}
-				<button class="nodrag window_titlebar_help"></button>
-			{/if} -->
 		{@render children?.()}
 	</div>
 </div>
+
+<!-- 
+@component
+ 
+## Window Titlebar
+
+- `title` - **REQUIRED** The title of your window.
+- `icon` - Relative path to the icon image (16x16).
+-->

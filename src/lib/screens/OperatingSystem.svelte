@@ -2,7 +2,6 @@
 	import { onMount, tick } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import {
-		activeWindowState,
 		config,
 		windowZIndexState,
 		positionCounterState,
@@ -10,12 +9,12 @@
 	} from '$stores/stores.svelte';
 	// * components
 	import TaskApp from '$components/ui/TaskApp.svelte';
-	import ContextMenu from '$components/ui/ContextMenu.svelte';
-	import ContextMenuItem from '$components/ui/ContextMenuItem.svelte';
+	import { ContextMenu } from '$components/ui/context-menu/index';
 	import ProgramIcon from '$components/ui/ProgramIcon.svelte';
 	// * util
 	import { playSound } from '$lib/util/audio';
 	import { newWindow, windows } from '$lib/index.svelte';
+	import SelectionBox from '$components/ui/SelectionBox.svelte';
 
 	// * stinking states
 	let overlay: boolean = $state(true);
@@ -29,20 +28,11 @@
 	// * start menu
 	let startMenuToggle: boolean = $state(false);
 	let contextMenuToggle: boolean = $state(false);
-	let desktopSelect: boolean = $state(false);
 
 	// * context menu
 	let contextMenuElement: HTMLElement;
 	let contextMenuX: number = $state(0),
 		contextMenuY: number = $state(0);
-
-	// * mouse positions
-	let startMouseX: number = $state(0),
-		startMouseY: number = $state(0);
-
-	// * selection
-	let selectionHeight: number = $state(0),
-		selectionWidth: number = $state(0);
 
 	// * functions
 	async function contextMenuFunc(event: MouseEvent) {
@@ -60,30 +50,6 @@
 			event.clientY >= innerHeight - contextMenuElement.offsetHeight - 31
 				? event.clientY - contextMenuElement.offsetHeight
 				: event.clientY;
-	}
-
-	// ! lets all laugh at an indie dev who never learns anything teeheehee
-	function selectionBoxHandlerDown(event: MouseEvent) {
-		if (event.target !== event.currentTarget) return;
-		if (event.button == 0) desktopSelect = true;
-		selectionHeight = 0;
-		selectionWidth = 0;
-		startMouseX = event.clientX;
-		startMouseY = event.clientY;
-		startMenuToggle = false;
-		activeWindowState.activeWindow = null;
-	}
-
-	function selectionBoxHandlerMove(event: MouseEvent) {
-		if (!desktopSelect) return;
-		selectionWidth = event.clientX - startMouseX;
-		selectionHeight = event.clientY - startMouseY;
-	}
-
-	function selectionBoxHandlerUp(event: MouseEvent) {
-		event.preventDefault();
-		desktopSelect = false;
-		if (event.target !== event.currentTarget) return;
 	}
 
 	$effect(() => {
@@ -113,46 +79,35 @@
 <div
 	class="operating-system"
 	oncontextmenu={contextMenuFunc}
-	onmouseup={selectionBoxHandlerUp}
-	onmousemove={selectionBoxHandlerMove}
 	onclick={() => {
 		contextMenuToggle = false;
 		programIconsSelect.length = 0;
 	}}
 >
 	<!-- * Desktop -->
-	<div class="operating-system_desktop" onmousedown={selectionBoxHandlerDown}>
-		<div
-			class="selection-box"
-			style="width: {Math.abs(selectionWidth)}px; height: {Math.abs(
-				selectionHeight
-			)}px; top: {Math.min(startMouseY, startMouseY + selectionHeight)}px; left: {Math.min(
-				startMouseX,
-				startMouseX + selectionWidth
-			)}px;"
-			hidden={!desktopSelect}
-		></div>
+	<div class="operating-system_desktop">
+		<!-- <SelectionBox /> -->
 		<div class="operating-system_desktop-programs">
 			<ProgramIcon
 				name="Test"
-				icon="/System/ImportantFiles/Shell/Icons/32x32/debug-32-abnormal.png"
+				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/debug-32-abnormal.png"
 				program="warning"
 			/>
 			<ProgramIcon
 				name="Notepad"
-				icon="/System/ImportantFiles/Shell/Icons/32x32/Text.png"
+				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Text.png"
 				program="notepad"
 				shortcut
 			/>
 			<ProgramIcon
 				name="Oneko"
-				icon="/System/ImportantFiles/Shell/Icons/32x32/Oneko.png"
+				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Oneko.png"
 				program="oneko"
 				shortcut
 			/>
 			<ProgramIcon
 				name="Not a virus :)"
-				icon="/System/ImportantFiles/Shell/Icons/32x32/Text.png"
+				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Text.png"
 				program="hydra"
 			/>
 		</div>
@@ -193,6 +148,7 @@
 			<img
 				src="/System/ImportantFiles/Brand/LativionOS-Small.png"
 				alt="Lativion OS Logo Small"
+				aria-hidden
 				draggable="false"
 			/>
 			<span>Start</span>
@@ -200,7 +156,9 @@
 		<div class="divider-vertical"></div>
 		<div class="taskbar_programs">
 			{#each windows as window (window.windowID)}
-				<TaskApp windowID={window.windowID} title={window.meta?.title} icon={window.meta?.icon} />
+				{#if window.meta?.taskApp !== false}
+					<TaskApp windowID={window.windowID} title={window.meta?.title} icon={window.meta?.icon} />
+				{/if}
 			{/each}
 		</div>
 		<div class="taskbar_system-tray">
@@ -210,7 +168,9 @@
 				{/if}
 			{/each}
 			<img
-				src="/System/ImportantFiles/Shell/Icons/16x16/Volume{config.volume ? '' : '-Mute'}.png"
+				src="/System/ImportantFiles/Shell/Themes/9x/Icons/16x16/Volume{config.volume
+					? ''
+					: '-Mute'}.png"
 				alt="Volume"
 				onclick={() => (config.volume = !config.volume)}
 			/>
@@ -223,20 +183,20 @@
 			<div class="start-menu_title"><span>Lativion OS</span></div>
 			<ul class="start-menu_container">
 				<li class="start-menu_item start-menu_item_sub">
-					<img src="/System/ImportantFiles/Shell/Icons/24x24/Programs.png" alt="Icon" />
+					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Programs.png" alt="Icon" />
 					<span>Programs</span>
 				</li>
 				<li class="start-menu_item">
-					<img src="/System/ImportantFiles/Shell/Icons/24x24/Settings.png" alt="Icon" />
+					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Settings.png" alt="Icon" />
 					<span>Settings</span>
 				</li>
 				<div class="divider-horizontal"></div>
 				<li class="start-menu_item">
-					<img src="/System/ImportantFiles/Shell/Icons/24x24/Help.png" alt="Icon" />
+					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Help.png" alt="Icon" />
 					<span>Help</span>
 				</li>
 				<li class="start-menu_item">
-					<img src="/System/ImportantFiles/Shell/Icons/24x24/Run.png" alt="Icon" />
+					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Run.png" alt="Icon" />
 					<span>Run...</span>
 				</li>
 				<div class="divider-horizontal"></div>
@@ -254,15 +214,18 @@
 					}}
 				>
 					{#if config.fullscreen}
-						<img src="/System/ImportantFiles/Shell/Icons/24x24/Minimize.png" alt="Icon" />
+						<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Minimize.png" alt="Icon" />
 						<span>Minimize</span>
 					{:else}
-						<img src="/System/ImportantFiles/Shell/Icons/24x24/Fullscreen.png" alt="Icon" />
+						<img
+							src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Fullscreen.png"
+							alt="Icon"
+						/>
 						<span>Fullscreen</span>
 					{/if}
 				</li>
 				<li class="start-menu_item">
-					<img src="/System/ImportantFiles/Shell/Icons/24x24/Shutdown.png" alt="Icon" />
+					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Shutdown.png" alt="Icon" />
 					<span>Shut Down...</span>
 				</li>
 				<div class="divider-horizontal"></div>
@@ -273,7 +236,10 @@
 						startMenuToggle = false;
 					}}
 				>
-					<img src="/System/ImportantFiles/Shell/Icons/24x24/File-Informative.png" alt="Icon" />
+					<img
+						src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/File-Informative.png"
+						alt="Icon"
+					/>
 					<span>About</span>
 				</li>
 			</ul>
@@ -281,18 +247,16 @@
 	{/if}
 	<!--* Context Menu -->
 	{#if contextMenuToggle}
-		<ContextMenu x={contextMenuX} y={contextMenuY} bind:node={contextMenuElement}>
-			{#snippet items()}
-				<ContextMenuItem onclick={() => console.log('thing')} text="Create File..." />
-				<ContextMenuItem
-					onclick={() => console.log('thing2')}
-					icon="/System/ImportantFiles/Shell/Icons/16x16/debug-16.png"
-					text="Create Folder..."
-				/>
-				<div class="divider-horizontal"></div>
-				<ContextMenuItem onclick={() => console.log('thing3')} text="Properties" />
-			{/snippet}
-		</ContextMenu>
+		<ContextMenu.Root x={contextMenuX} y={contextMenuY} bind:node={contextMenuElement}>
+			<ContextMenu.Item onclick={() => console.log('thing')} text="Create File..." />
+			<ContextMenu.Item
+				onclick={() => console.log('thing2')}
+				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/16x16/debug-16.png"
+				text="Create Folder..."
+			/>
+			<div class="divider-horizontal"></div>
+			<ContextMenu.Item onclick={() => console.log('thing3')} text="Properties" />
+		</ContextMenu.Root>
 	{/if}
 </div>
 

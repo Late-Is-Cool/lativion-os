@@ -26,7 +26,7 @@
 @font-face {
 	font-family: 'Fira Sans';
 	font-style: normal;
-	src: url("/System/ImportantFiles/Fonts/fira-sans/FiraSans-Regular.ttf")
+	src: url('/System/ImportantFiles/Fonts/fira-sans/FiraSans-Regular.ttf');
 }
 
 *,
@@ -40,7 +40,7 @@
 }
 
 *::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 ol,
@@ -207,7 +207,7 @@ a {
 	&_desktop {
 		height: 100%;
 		width: 100%;
-		background-image: url('/System/ImportantFiles/Shell/Wallpapers/wallpaper-blue.png');
+		background-image: url('/System/ImportantFiles/Shell/Themes/9x/Wallpapers/wallpaper-blue.png');
 		background-repeat: no-repeat;
 		background-size: cover;
 		// z-index: -50;
@@ -346,12 +346,12 @@ a {
 
 		&_sub {
 			&:hover::after {
-				content: url('/System/ImportantFiles/Shell/arrow-right-white.png');
+				content: url('/System/ImportantFiles/Shell/Themes/9x/arrow-right-white.png');
 			}
 			&::after {
 				position: absolute;
 				right: 8px;
-				content: url('/System/ImportantFiles/Shell/arrow-right.png');
+				content: url('/System/ImportantFiles/Shell/Themes/9x/arrow-right.png');
 			}
 		}
 
@@ -473,7 +473,7 @@ a {
 	background-color: silver;
 	color: white;
 	font-size: 8px;
-	padding: 3px;
+	padding: 4px;
 
 	position: absolute;
 
@@ -496,7 +496,7 @@ a {
 
 	&_titlebar {
 		background-image: linear-gradient(90deg, gray, silver);
-		
+
 		margin-bottom: 1px;
 		height: 18px;
 		padding: 2px;
@@ -533,61 +533,62 @@ a {
 		&_close {
 			height: 14px;
 			width: 16px;
-			background-image: url('/System/ImportantFiles/Shell/Window-UI/window-close.png');
+			background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-close.png');
 			margin-left: 2px;
 
 			&:active {
-				background-image: url('/System/ImportantFiles/Shell/Window-UI/window-close-active.png');
+				background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-close-active.png');
 			}
 		}
 
 		&_maximize {
 			height: 14px;
 			width: 16px;
-			background-image: url('/System/ImportantFiles/Shell/Window-UI/window-maximize.png');
+			background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-maximize.png');
 
 			&:active {
-				background-image: url('/System/ImportantFiles/Shell/Window-UI/window-maximize-active.png');
+				background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-maximize-active.png');
 			}
 
 			&:disabled {
-				background-image: url('/System/ImportantFiles/Shell/Window-UI/window-maximize-disabled.png');
+				background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-maximize-disabled.png');
 			}
 		}
 
 		&_maxxed {
 			height: 14px;
 			width: 16px;
-			background-image: url('/System/ImportantFiles/Shell/Window-UI/window-maxxed.png');
+			background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-maxxed.png');
 
 			&:active {
-				background-image: url('/System/ImportantFiles/Shell/Window-UI/window-maxxed-active.png');
+				background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-maxxed-active.png');
 			}
 		}
 
 		&_minimize {
 			height: 14px;
 			width: 16px;
-			background-image: url('/System/ImportantFiles/Shell/Window-UI/window-minimize.png');
+			background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-minimize.png');
 
 			&:active {
-				background-image: url('/System/ImportantFiles/Shell/Window-UI/window-minimize-active.png');
+				background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-minimize-active.png');
 			}
 		}
 
 		&_help {
 			height: 14px;
 			width: 16px;
-			background-image: url('/System/ImportantFiles/Shell/Window-UI/window-help.png');
+			background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-help.png');
 
 			&:active {
-				background-image: url('/System/ImportantFiles/Shell/Window-UI/window-help-active.png');
+				background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/window-help-active.png');
 			}
 		}
 	}
 
 	&_resizable-handle {
 		position: absolute;
+		// background-color: red;
 
 		// vertical horizontal
 		&_n {
@@ -640,11 +641,22 @@ a {
 		}
 
 		&_se {
-			height: 10px;
-			width: 10px;
+			height: 22px;
+			width: 22px;
 			bottom: -5px;
 			right: -5px;
 			cursor: se-resize;
+		}
+
+		&_se-footer {
+			height: 12px;
+			width: 12px;
+			bottom: 5px;
+			right: 5px;
+			cursor: se-resize;
+
+			background-image: url('/System/ImportantFiles/Shell/Themes/9x/Window-UI/resize-se-footer.png');
+			box-shadow: 1px 1px silver;
 		}
 
 		&_sw {
@@ -668,21 +680,31 @@ a {
 		transition: all 0.5s ease;
 	}
 
-	&_menubar {
+	&_tablist {
 		padding: 1px;
 		display: flex;
 		flex-direction: row;
 
-		&_button {
+		&-button {
 			background-color: silver;
 			padding-block: 4px;
 			padding-inline: 5px;
+
 			&:hover {
 				box-shadow:
 					inset -1px -1px gray,
 					inset 1px 1px white;
 			}
 		}
+	}
+
+	&_footer {
+		padding: 4px;
+		color: black;
+		line-height: 1.2;
+		box-shadow:
+			inset 1px 1px gray,
+			inset -1px -1px white;
 	}
 }
 
@@ -724,7 +746,7 @@ a {
 	&_select {
 		// background-color: black;
 		.program-icon_container {
-			filter: brightness(.4) sepia(100%) hue-rotate(200deg) saturate(4);
+			filter: brightness(0.4) sepia(100%) hue-rotate(200deg) saturate(4);
 		}
 
 		.program-icon_title {
@@ -741,18 +763,19 @@ a {
 	max-width: 160px;
 	padding-inline: 4px;
 	box-shadow: $border-9x;
-	
+
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	
+	overflow: hidden;
+
 	flex: 1;
 
 	&_icon {
 		width: 16px;
 		height: 16px;
 	}
-	
+
 	&_title {
 		margin-inline: 5px;
 		text-overflow: ellipsis;
@@ -766,4 +789,3 @@ a {
 		text-shadow: 1px 0;
 	}
 }
-

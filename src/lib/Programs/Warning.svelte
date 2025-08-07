@@ -10,14 +10,7 @@
 	let { windowID, zIndex, minimized = false, initialPosition } = $props();
 </script>
 
-<Window.Root
-	initialSize={{ h: 200, w: 240 }}
-	minimumSize={{ h: 120, w: 150 }}
-	{windowID}
-	{zIndex}
-	{minimized}
-	{initialPosition}
->
+<Window.Root initialSize={{ h: 200, w: 240 }} {windowID} {zIndex} {minimized} {initialPosition}>
 	<Window.TitleBar title={meta.title} icon={meta.icon}>
 		<Window.HelpButton />
 		<Window.MinimizeButton />
@@ -35,4 +28,6 @@
 			</span>
 		</div>
 	</Window.Body>
+	<Window.Footer>I am a footer</Window.Footer>
+	<Window.Scalable minimumSize={{ h: 120, w: 150 }} />
 </Window.Root>

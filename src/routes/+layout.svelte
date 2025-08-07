@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '../app.scss';
 	import 'animate.css';
 

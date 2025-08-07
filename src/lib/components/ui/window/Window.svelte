@@ -5,10 +5,6 @@
 
 	interface WindowProps {
 		windowID: number;
-		minimumSize?: {
-			h: number;
-			w: number;
-		};
 		initialPosition?: {
 			x: number;
 			y: number;
@@ -26,10 +22,6 @@
 
 	let {
 		windowID = 0,
-		minimumSize = {
-			h: 150,
-			w: 150
-		},
 		initialPosition = {
 			x: 30,
 			y: 30
@@ -38,115 +30,31 @@
 			h: 320,
 			w: 480
 		},
-		scalable = true,
 		animations = true,
 		zIndex = 0,
 		minimized = false,
 		children
 	}: WindowProps = $props();
 
-	let size = $state({ ...initialSize });
+	let size = $state(initialSize);
 
-	let position = $state({ ...initialPosition });
-
-	// resizing stuff
-	let resizing = $state(false);
-	let directionDrag = $state('');
-	let startMouseX = $state(0),
-		startMouseY = $state(0),
-		startWidth = $state(0),
-		startHeight = $state(0),
-		startX = $state(0),
-		startY = $state(0);
+	let position = $state(initialPosition);
 
 	let maximized = $state(false);
 	let untransition = $state(false);
 
 	let windowElement: HTMLElement;
 
-	const directions = ['n', 'e', 's', 'w', 'ne', 'nw', 'se', 'sw'];
+	let scalable = $state(false);
+	let footer = $state(false);
 
-	function startResize(event: MouseEvent) {
-		resizing = true;
-		let target = event.target as HTMLElement;
-		if (target.className.includes('window_resizable-handle_')) {
-			const match = target.className.match(/window_resizable-handle_(ne|nw|se|sw|n|e|s|w)/);
-			if (match) directionDrag = match[1];
-		}
+	setContext('set-scalable', () => {
+		scalable = true;
+	});
 
-		startMouseX = event.clientX;
-		startMouseY = event.clientY;
-		startWidth = size.w;
-		startHeight = size.h;
-		startX = position.x;
-		startY = position.y;
-	}
-
-	function moveResize(event: MouseEvent) {
-		if (!resizing) return;
-
-		const dragX = event.clientX - startMouseX;
-		const dragY = event.clientY - startMouseY;
-
-		let newHeight = 0;
-		let newWidth = 0;
-
-		switch (directionDrag) {
-			case 'n':
-				newHeight = startHeight - dragY;
-				size.h = Math.max(newHeight, minimumSize.h);
-				position.y = startY + Math.min(dragY, startHeight - minimumSize.h);
-				break;
-
-			case 'e':
-				newWidth = startWidth + dragX;
-				size.w = Math.max(newWidth, minimumSize.w);
-				break;
-
-			case 's':
-				newHeight = startHeight + dragY;
-				size.h = Math.max(newHeight, minimumSize.h);
-				break;
-
-			case 'w':
-				newWidth = startWidth - dragX;
-				size.w = Math.max(newWidth, minimumSize.w);
-				position.x = startX + Math.min(dragX, startWidth - minimumSize.w);
-				break;
-
-			case 'ne':
-				newHeight = startHeight - dragY;
-				newWidth = startWidth + dragX;
-				size.h = Math.max(newHeight, minimumSize.h);
-				size.w = Math.max(newWidth, minimumSize.w);
-				position.y = startY + Math.min(dragY, startHeight - minimumSize.h);
-				break;
-
-			case 'nw':
-				newHeight = startHeight - dragY;
-				newWidth = startWidth - dragX;
-				size.h = Math.max(newHeight, minimumSize.h);
-				size.w = Math.max(newWidth, minimumSize.w);
-				position.y = startY + Math.min(dragY, startHeight - minimumSize.h);
-				position.x = startX + Math.min(dragX, startWidth - minimumSize.w);
-				break;
-
-			case 'se':
-				newHeight = startHeight + dragY;
-				newWidth = startWidth + dragX;
-				size.h = Math.max(newHeight, minimumSize.h);
-				size.w = Math.max(newWidth, minimumSize.w);
-				break;
-
-			case 'sw':
-				newHeight = startHeight + dragY;
-				newWidth = startWidth - dragX;
-				size.h = Math.max(newHeight, minimumSize.h);
-				size.w = Math.max(newWidth, minimumSize.w);
-				position.x = startX + Math.min(dragX, startWidth - minimumSize.w);
-				break;
-		}
-	}
+	setContext('set-footer', () => {
+		footer = true;
+	});
 
 	function handleMaximize() {
 		if (!scalable) return;
@@ -198,8 +106,11 @@
 	setContext('window', {
 		windowID,
 		maximized: () => maximized,
+		position,
+		size,
 		closeWindow,
-		handleMaximize
+		handleMaximize,
+		footer: () => footer
 	});
 
 	onMount(() => {
@@ -223,14 +134,6 @@
 	});
 </script>
 
-<svelte:window
-	onmousemove={(event) => moveResize(event)}
-	onmouseup={() => {
-		resizing = false;
-		directionDrag = '';
-	}}
-/>
-
 <div
 	class="window"
 	class:window_maximized={maximized}
@@ -251,47 +154,32 @@
 	bind:this={windowElement}
 >
 	{@render children?.()}
-	{#if scalable && !maximized}
-		{#each directions as direction}
-			<div
-				class="window_resizable-handle window_resizable-handle_{direction}"
-				onmousedown={(event) => startResize(event)}
-			></div>
-		{/each}
-	{/if}
 </div>
 
 <!-- 
 @component
  
-## Window
+## Window Root
 
 The backbone of pretty much every application. It's a window!
 
 @example
 ```svelte
-<Window title="My Window">
-	{#snippet body()}
-		<div>Hello World!</div>
-	{/snippet}
-</Window>
+<Window.Root>
+	<Window.TitleBar title="My Window">
+		<Window.CloseButton/>
+	</Window.TitleBar>
+	<Window.Body>
+		<div>Hello!</div>
+	</Window.Body>
+	<Window.Scalable/>
+</Window.Root>
 ```
 
 - `windowID` - Window ID (don't assign)
-- `icon` - Image source of your window's icon
-- `title` - Title of your window
-- `minH` - Minimum Height for scaling
-- `minW` - Minimum width for scaling
-- `initialX` - Initial X Position when first mounted
-- `initialY` - Initial Y Position when first mounted
-- `initialHeight` - Initial Height when first mounted
-- `initialWidth` - Initial Width when first mounted
-- `scalable` - If the window is scalable or not
-- `maximizeButton` - Enable or disable the maximize button
-- `minimizeButton` - Enable or disable the minimize button
-- `helpButton` - Enable or disable the help button
+- `initialPosition` Initial position when first mounted { x: 0, y: 0}
+- `initialSize` Initial size when first mounted { h: 0, w: 0 }. Default { h: 320, w: 480 }
 - `animations` - Enable or disable animations when mounting or closing
-- `zIndex` - zIndex for layering (don't assign)
+- `zIndex` - zIndex for layering
 - `minimized` - Toggle for minimizing purposes (don't assign)
-- `body` - The inner body of the window, this is where your content lives inside
 -->
