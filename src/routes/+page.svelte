@@ -6,9 +6,13 @@
 	import BootLaunch from '$lib/screens/BootLaunch.svelte';
 	import OperatingSystem from '$lib/screens/OperatingSystem.svelte';
 	import Shutdown from '$screens/Shutdown.svelte';
+	import { setContext } from 'svelte';
+	import { page } from '$app/state';
 
 	// ? looks better than an if/else statement
-	let screens = [BootScreen, BootPrepare, BootLaunch, OperatingSystem];
+	let screens = [BootScreen, BootPrepare, BootLaunch, OperatingSystem, Shutdown];
+
+	setContext('version', page.data.version);
 
 	let ScreenComponent = $derived(screens[screenState.screen]);
 </script>

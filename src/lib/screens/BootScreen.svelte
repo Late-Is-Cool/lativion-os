@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { screenState, config } from '$stores/stores.svelte';
+	import { getContext } from 'svelte';
 
 	let select: number = $state(0);
 
@@ -115,7 +116,7 @@
 <div class="bootscreen">
 	<div class="bootscreen_title">
 		<div>MOOSE BRUHB</div>
-		<div>Version 0.3.0</div>
+		<div>Version {getContext('version')}</div>
 	</div>
 
 	<div class="bootscreen_optionsContainer">
