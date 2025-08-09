@@ -8,18 +8,11 @@
 <script>
 	import { Window } from '$components/ui/window';
 	import { newWindow, removeWindow } from '$lib/index.svelte';
-	import { onMount } from 'svelte';
 
 	let { windowID, zIndex, minimized = false } = $props();
 
 	let windowHeight = 380;
 	let windowWidth = 450;
-
-	let credits = $state('');
-
-	onMount(async () => {
-		credits = await fetch('/System/ImportantFiles/Credits.txt').then((res) => res.text());
-	});
 </script>
 
 <Window.Root
@@ -60,10 +53,16 @@
 					And I had a lot of fun doing it! :)<br />
 				</p>
 				<div class="about_links">
-					<a class="link" href={'#'} onclick={() => newWindow('notepad', { content: credits })}>
+					<a
+						class="link"
+						href={'#'}
+						onclick={() => newWindow('notepad', { file: '/System/ImportantFiles/Credits.txt' })}
+					>
 						View Credits
 					</a>
-					<a class="link" href="https://github.com/Late-Is-Cool/lativion-os">Source Code</a>
+					<a class="link" target="_blank" href="https://github.com/Late-Is-Cool/lativion-os"
+						>Source Code</a
+					>
 				</div>
 			</div>
 			<div class="about_buttons">
@@ -106,9 +105,9 @@
 	}
 
 	.about_body {
-		color: black;
 		padding-top: 30px;
 		padding-inline: 80px;
+		line-height: 1.5;
 		height: 100%;
 	}
 
@@ -121,6 +120,6 @@
 		margin-top: 20px;
 		display: flex;
 		flex-direction: column;
-		gap: 6px;
+		gap: 2px;
 	}
 </style>

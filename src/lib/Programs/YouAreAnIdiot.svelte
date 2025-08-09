@@ -18,7 +18,13 @@
 	// });
 </script>
 
-<Window.Root {windowID} {zIndex} {minimized} initialPosition={position}>
+<Window.Root
+	{windowID}
+	{zIndex}
+	{minimized}
+	initialPosition={position}
+	initialSize={{ h: 480, w: 640 }}
+>
 	<Window.TitleBar
 		title="Trojan.JS.YouAreAnIdiot"
 		icon="/System/ImportantFiles/Shell/Themes/9x/Icons/16x16/Program/YouAreAnIdiot.png"

@@ -19,7 +19,7 @@
 	</Window.TitleBar>
 	<Window.Body>
 		<div
-			style="color: black; font-size: 12px; display: flex; align-items: center; justify-content: center; height: 100%; overflow: scroll;"
+			style="font-size: 12px; display: flex; align-items: center; justify-content: center; height: 100%; overflow: scroll;"
 		>
 			<span
 				>Everything in this site is NOT FINAL.<br />Thank you for your understanding.
@@ -28,6 +28,5 @@
 			</span>
 		</div>
 	</Window.Body>
-	<Window.Footer>I am a footer</Window.Footer>
 	<Window.Scalable minimumSize={{ h: 120, w: 150 }} />
 </Window.Root>

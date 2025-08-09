@@ -13,6 +13,7 @@
 		title: string;
 		initialPosition: { x: number; y: number };
 		minimized: boolean;
+		text?: string;
 		onClose?: () => void;
 	}
 
@@ -25,17 +26,18 @@
 		title,
 		initialPosition = { x: (innerWidth - 375) / 2, y: innerHeight / -120 / 2 },
 		minimized,
+		text = '',
 		onClose = () => removeWindow(windowID)
 	}: Props = $props();
 
 	type Icon = 'Error' | 'Warning' | 'Info' | 'Help';
 
 	onMount(() => {
-		if (icon === 'Error') {
-			playSound('quack');
-		} else {
-			playSound('chord');
-		}
+		// if (icon === 'Error') {
+		// 	playSound('quack');
+		// } else {
+		playSound('chord');
+		// }
 	});
 </script>
 
@@ -58,9 +60,21 @@
 					draggable="false"
 				/>
 			</div>
-			<div class="prompt_content">{@render content()}</div>
+			<div class="prompt_content">
+				{#if content}
+					{@render content()}
+				{:else}
+					{text}
+				{/if}
+			</div>
 			<div class="prompt_buttons">
-				{@render buttons()}
+				{#if buttons}
+					{@render buttons?.()}
+				{:else}
+					<button class="button" onclick={getContext<WindowContext>('window').closeWindow}
+						>OK</button
+					>
+				{/if}
 			</div>
 		</div>
 	</Window.Body>

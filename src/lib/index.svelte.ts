@@ -28,7 +28,7 @@
 //
 // Lativion OS stuff
 
-import type { SvelteComponent } from 'svelte';
+import type { Snippet, Component } from 'svelte';
 
 interface ProgramMeta {
 	title: string;
@@ -39,13 +39,13 @@ interface ProgramMeta {
 }
 
 interface ProgramModule {
-	program: typeof SvelteComponent;
+	program: Component;
 	meta?: ProgramMeta;
 }
 
 type Program = {
 	windowID: number;
-	program: typeof SvelteComponent;
+	program: Component;
 	meta?: ProgramMeta;
 	zIndex: number;
 	minimized: boolean;
@@ -53,6 +53,7 @@ type Program = {
 };
 
 import { activeWindowState, positionCounterState, windowZIndexState } from '$stores/stores.svelte';
+import Prompt from '$components/ui/Prompt.svelte';
 
 // # load pseudo-programs
 const programModules = import.meta.glob('./Programs/**/*.svelte');
@@ -69,7 +70,7 @@ for (const path in programModules) {
 
 	programs[name] = async () => {
 		const mod = (await programModules[path]()) as {
-			default: typeof SvelteComponent;
+			default: Component;
 			meta?: ProgramMeta;
 		};
 		return {
@@ -84,7 +85,7 @@ let nextID = 0;
 
 export async function newWindow(programName: string, props = {}): Promise<void> {
 	const programLoader = programs[programName.toLowerCase()];
-	if (!programLoader) throw new Error(`Program ${programName} is not found!`);
+	if (!programLoader) throw new Error(`Program "${programName}" is not found!`);
 
 	const { program, meta } = await programLoader();
 	const windowID = nextID++;
@@ -126,4 +127,19 @@ export function minimizeRestoreWindow(windowID: number): void {
 		win.minimized = true;
 		activeWindowState.activeWindow = null;
 	}
+}
+
+export function newPrompt(icon: string = 'Error', title: string = 'Error', text: string): void {
+	const windowID = nextID++;
+	windows.push({
+		windowID,
+		program: Prompt as Component,
+		zIndex: windowZIndexState.windowZIndex++,
+		minimized: false,
+		props: {
+			icon,
+			title,
+			text
+		}
+	});
 }

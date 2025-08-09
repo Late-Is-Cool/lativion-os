@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { Window } from '$components/ui/window';
+	import { getContext } from 'svelte';
 
 	let {
 		windowID,
 		zIndex,
 		minimized,
-		website = 'about:blank'
+		website = '/System/ImportantFiles/Programs/Browser/landing.html'
 	}: {
 		windowID: number;
 		zIndex: number;
@@ -23,11 +24,15 @@
 	<Window.Body>
 		<iframe src={website}></iframe>
 	</Window.Body>
+	<Window.Footer>HELP ME</Window.Footer>
+	<Window.Scalable />
 </Window.Root>
 
 <style lang="scss">
 	iframe {
 		width: 100%;
 		height: 100%;
+
+		background-color: white;
 	}
 </style>

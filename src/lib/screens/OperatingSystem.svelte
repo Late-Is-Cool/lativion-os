@@ -1,4 +1,6 @@
 <script lang="ts">
+	import '$lib/skins/9x/9x.scss';
+
 	import { onMount, tick } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import {
@@ -110,6 +112,11 @@
 				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Text.png"
 				program="hydra"
 			/>
+			<!-- <ProgramIcon
+				name="Browser"
+				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Browser.png"
+				program="browser"
+			/> -->
 		</div>
 		<div>
 			{#each windows as window (window.windowID)}
@@ -195,7 +202,13 @@
 					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Help.png" alt="Icon" />
 					<span>Help</span>
 				</li>
-				<li class="start-menu_item">
+				<li
+					class="start-menu_item"
+					onclick={() => {
+						newWindow('run');
+						startMenuToggle = false;
+					}}
+				>
 					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Run.png" alt="Icon" />
 					<span>Run...</span>
 				</li>

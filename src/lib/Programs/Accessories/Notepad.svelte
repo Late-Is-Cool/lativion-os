@@ -8,11 +8,19 @@
 <script>
 	import { Window } from '$components/ui/window';
 	import { ContextMenu } from '$components/ui/context-menu/index';
+	import { onMount } from 'svelte';
 
-	let { windowID, zIndex, minimized = false, content = '' } = $props();
+	let { windowID, zIndex, minimized = false, file = '' } = $props();
 
 	let windowHeight = 400;
 	let windowWidth = 650;
+
+	let content = $state('');
+
+	onMount(async () => {
+		if (file == '') return;
+		content = await fetch(file).then((res) => res.text());
+	});
 </script>
 
 <Window.Root
@@ -50,29 +58,30 @@
 			<textarea>{content}</textarea>
 		</div>
 	</Window.Body>
-	<Window.Footer>Untitled</Window.Footer>
+	<Window.Footer>{file ? `D:${file}` : 'Untitled'}</Window.Footer>
 	<Window.Scalable />
 </Window.Root>
 
 <style lang="scss">
-	@use '../../../styles/variables.scss' as *;
-
 	.notepad {
 		height: 100%;
 		width: 100%;
 
 		textarea {
+			box-shadow:
+				inset -1px -1px white,
+				inset 1px 1px gray,
+				inset -2px -2px #dfdfdf,
+				inset 2px 2px black;
 			width: 100%;
 			height: inherit;
 			resize: none;
 
+			padding: 5px;
+
 			font-family: 'Ubuntu Mono';
 			line-height: 1;
 			font-size: 14px;
-			&::selection {
-				background-color: $accent-color;
-				color: white;
-			}
 
 			&:focus {
 				outline: none;
