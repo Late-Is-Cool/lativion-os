@@ -12,4 +12,10 @@ interface WindowContext {
 	closeWindow: () => void;
 	handleMaximize: () => void;
 	footer: () => boolean;
+	scalable: () => boolean;
+	status: {
+		idle: boolean;
+		moving: boolean;
+		resizing: boolean;
+	};
 }

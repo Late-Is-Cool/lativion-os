@@ -7,7 +7,8 @@
 		config,
 		windowZIndexState,
 		positionCounterState,
-		programIconsSelect
+		programIconsSelect,
+		activeWindowState
 	} from '$stores/stores.svelte';
 	// * components
 	import TaskApp from '$components/ui/TaskApp.svelte';
@@ -44,10 +45,14 @@
 		if (!target?.classList.contains('operating-system_desktop')) return;
 
 		contextMenuToggle = true;
+		startMenuToggle = false;
 
 		await tick();
 
-		contextMenuX = event.clientX;
+		contextMenuX =
+			event.clientX >= innerWidth - contextMenuElement.offsetWidth
+				? event.clientX - contextMenuElement.offsetWidth
+				: event.clientX;
 		contextMenuY =
 			event.clientY >= innerHeight - contextMenuElement.offsetHeight - 31
 				? event.clientY - contextMenuElement.offsetHeight
@@ -83,11 +88,18 @@
 	oncontextmenu={contextMenuFunc}
 	onclick={() => {
 		contextMenuToggle = false;
+		startMenuToggle = false;
 		programIconsSelect.length = 0;
 	}}
 >
 	<!-- * Desktop -->
-	<div class="operating-system_desktop">
+	<div
+		class="operating-system_desktop"
+		onmousedown={async (event) => {
+			event.stopImmediatePropagation();
+			activeWindowState.activeWindow = null;
+		}}
+	>
 		<!-- <SelectionBox /> -->
 		<div class="operating-system_desktop-programs">
 			<ProgramIcon
@@ -112,11 +124,17 @@
 				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Text.png"
 				program="hydra"
 			/>
-			<!-- <ProgramIcon
+			<ProgramIcon
 				name="Browser"
 				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Browser.png"
 				program="browser"
-			/> -->
+			/>
+			<ProgramIcon
+				name="Buy Me a Coffee"
+				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/BMaC.png"
+				externalSite="https://buymeacoffee.com/late"
+				shortcut
+			/>
 		</div>
 		<div>
 			{#each windows as window (window.windowID)}
@@ -126,11 +144,13 @@
 					windowID={window.windowID}
 					zIndex={window.zIndex}
 					minimized={window.minimized}
-					initialPosition={{
+				/>
+				<!--
+					 initialPosition={{
 						x: 30 + positionCounterState.positionCounter * 20,
 						y: 60 + positionCounterState.positionCounter * 20
-					}}
-				/>
+					}} 
+				-->
 			{/each}
 		</div>
 	</div>

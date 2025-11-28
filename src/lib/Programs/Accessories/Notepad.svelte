@@ -19,7 +19,9 @@
 
 	onMount(async () => {
 		if (file == '') return;
-		content = await fetch(file).then((res) => res.text());
+		content = await fetch(file)
+			.then((res) => res.text())
+			.catch(() => 'FAILED TO LOAD FILE.');
 	});
 </script>
 

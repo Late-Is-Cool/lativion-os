@@ -24,7 +24,7 @@
 		windowID,
 		zIndex,
 		title,
-		initialPosition = { x: (innerWidth - 375) / 2, y: innerHeight / -120 / 2 },
+		initialPosition = { x: (innerWidth - 375) / 2, y: (innerHeight - 120) / 2 },
 		minimized,
 		text = '',
 		onClose = () => removeWindow(windowID)

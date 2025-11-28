@@ -6,13 +6,23 @@
 </script>
 
 <script lang="ts">
-	import { Window } from '$lib/components/ui/window/index';
+	import { Window } from '$components/ui/window';
 	import { newWindow, newPrompt } from '$lib/index.svelte';
-	import { createRawSnippet, getContext } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 
 	let { windowID, zIndex, minimized } = $props();
 
 	let inputValue = $state('');
+
+	function run() {
+		newWindow(inputValue).catch((err) => newPrompt('Error', 'Run: Invalid Program', `${err}`));
+	}
+
+	let focus: HTMLElement;
+
+	onMount(() => {
+		focus.focus();
+	});
 </script>
 
 <Window.Root
@@ -26,29 +36,22 @@
 		<Window.CloseButton />
 	</Window.TitleBar>
 	<Window.Body>
-		<div class="run">
+		<form class="run">
 			<div class="run_top">
 				<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Run.png" alt="Run Icon" />
 				<span>Type the name of a program and Lativion OS will open it for you.</span>
 			</div>
 			<div class="run_prompt">
 				<span>Open:</span>
-				<input bind:value={inputValue} type="text" />
+				<input bind:value={inputValue} type="text" bind:this={focus} />
 			</div>
 			<div class="run_buttons">
-				<button
-					class="button"
-					onclick={() => {
-						newWindow(inputValue).catch((err) =>
-							newPrompt('Error', 'Run: Invalid Program', `${err}`)
-						);
-					}}>OK</button
-				>
+				<button class="button" onclick={run}>OK</button>
 				<button class="button" onclick={getContext<WindowContext>('window').closeWindow}
 					>Cancel</button
 				>
 			</div>
-		</div>
+		</form>
 	</Window.Body>
 </Window.Root>
 

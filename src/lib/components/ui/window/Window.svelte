@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { focusWindow, removeWindow, windows } from '$lib/index.svelte';
+	import { activeWindowState } from '$stores/stores.svelte';
 	import { draggable } from '@neodrag/svelte';
 	import { onMount, setContext, type Snippet } from 'svelte';
 
@@ -13,7 +14,6 @@
 			h: number;
 			w: number;
 		};
-		scalable?: boolean;
 		animations?: boolean;
 		zIndex: number;
 		minimized: boolean;
@@ -36,9 +36,8 @@
 		children
 	}: WindowProps = $props();
 
-	let size = $state(initialSize);
-
 	let position = $state(initialPosition);
+	let size = $state(initialSize);
 
 	let maximized = $state(false);
 	let untransition = $state(false);
@@ -103,6 +102,14 @@
 		}
 	}
 
+	let status = $state({
+		moving: false,
+		resizing: false,
+		get idle() {
+			return activeWindowState.activeWindow !== windowID;
+		}
+	});
+
 	setContext('window', {
 		windowID,
 		maximized: () => maximized,
@@ -110,7 +117,9 @@
 		size,
 		closeWindow,
 		handleMaximize,
-		footer: () => footer
+		footer: () => footer,
+		status,
+		scalable: () => scalable
 	});
 
 	onMount(() => {
@@ -141,14 +150,23 @@
 	class:window_minimized={minimized}
 	style="height: {size.h}px; width: {size.w}px; z-index: {500 + zIndex};
 		{maximized ? 'translate(0px, 0px)' : `translate: ${position.x}px ${position.y}px;`}"
-	onmousedown={() => focusWindow(windowID)}
+	onmousedown={(event) => {
+		event.stopPropagation();
+		focusWindow(windowID);
+	}}
 	use:draggable={{
 		handle: '.drag',
 		cancel: '.nodrag',
 		position,
+		onDragStart: () => {
+			status.moving = true;
+		},
 		onDrag: ({ offsetX, offsetY }) => {
 			position.x = offsetX;
 			position.y = offsetY;
+		},
+		onDragEnd: () => {
+			status.moving = false;
 		}
 	}}
 	bind:this={windowElement}
@@ -177,8 +195,8 @@ The backbone of pretty much every application. It's a window!
 ```
 
 - `windowID` - Window ID (don't assign)
-- `initialPosition` Initial position when first mounted { x: 0, y: 0}
-- `initialSize` Initial size when first mounted { h: 0, w: 0 }. Default { h: 320, w: 480 }
+- `position` Position when first mounted, and also reactive. { x: 0, y: 0}
+- `size` Size of the window. { h: 0, w: 0 }. Default { h: 320, w: 480 }
 - `animations` - Enable or disable animations when mounting or closing
 - `zIndex` - zIndex for layering
 - `minimized` - Toggle for minimizing purposes (don't assign)

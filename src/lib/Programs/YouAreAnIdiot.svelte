@@ -1,21 +1,21 @@
 <script lang="ts">
-	import { Window } from '$components/ui/window/index';
+	import { Window } from '$components/ui/window';
 
 	let { windowID, zIndex, minimized } = $props();
 
 	let position = $state({ x: 0, y: 0 });
 
-	// $effect(() => {
-	// 	let interval = setInterval(() => {
-	// 		position = { x: position.x + 5, y: position.y + 5 };
-	// 	}, 500);
+	$effect(() => {
+		let interval = setInterval(() => {
+			position = { x: position.x + 5, y: position.y + 5 };
+		}, 50);
 
-	// 	$inspect(position);
+		$inspect(position);
 
-	// 	return () => {
-	// 		clearInterval(interval);
-	// 	};
-	// });
+		return () => {
+			clearInterval(interval);
+		};
+	});
 </script>
 
 <Window.Root
@@ -32,5 +32,5 @@
 	>
 		<Window.CloseButton onclick={() => {}} />
 	</Window.TitleBar>
-	<Window.Body>Obama</Window.Body>
+	<Window.Body>idiot</Window.Body>
 </Window.Root>

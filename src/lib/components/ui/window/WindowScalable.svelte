@@ -33,6 +33,7 @@
 
 	function startResize(event: MouseEvent) {
 		resizing = true;
+
 		let target = event.target as HTMLElement;
 		if (target.className.includes('window_resizable-handle_')) {
 			const match = target.className.match(/window_resizable-handle_(ne|nw|se|sw|n|e|s|w)/);
@@ -49,6 +50,7 @@
 
 	function moveResize(event: MouseEvent) {
 		if (!resizing) return;
+		windowContext.status.resizing = true;
 
 		const dragX = event.clientX - startMouseX;
 		const dragY = event.clientY - startMouseY;
@@ -112,12 +114,17 @@
 				break;
 		}
 	}
+
+	$effect(() => {
+		$inspect(size, position);
+	});
 </script>
 
 <svelte:window
 	onmousemove={(event) => moveResize(event)}
 	onmouseup={() => {
 		resizing = false;
+		windowContext.status.resizing = false;
 		directionDrag = '';
 	}}
 />

@@ -230,3 +230,16 @@ a {
 
 	z-index: 50;
 }
+
+.window {
+	&_iframe {
+		width: 100%;
+		height: 100%;
+
+		background-color: white;
+
+		&_disable {
+			pointer-events: none;
+		}
+	}
+}

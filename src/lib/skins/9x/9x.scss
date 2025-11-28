@@ -228,6 +228,11 @@ input[type='text'] {
 		display: flex;
 		gap: 4px;
 
+		img {
+			height: 16px;
+			width: 16px;
+		}
+
 		&:hover {
 			background-color: $accent-color;
 			color: white;
@@ -432,8 +437,8 @@ input[type='text'] {
 		}
 
 		&_se {
-			height: 22px;
-			width: 22px;
+			height: 10px;
+			width: 10px;
 			bottom: -5px;
 			right: -5px;
 			cursor: se-resize;
@@ -499,10 +504,13 @@ input[type='text'] {
 	}
 
 	&_footer {
+		height: 18px;
 		padding: 4px;
 		color: black;
 		line-height: 1.2;
 		margin-top: 2px;
+
+		flex-shrink: 0;
 
 		text-overflow: ellipsis;
 		overflow: hidden;

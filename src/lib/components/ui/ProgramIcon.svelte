@@ -2,7 +2,14 @@
 	import { newWindow } from '$lib/index.svelte';
 	import { activeWindowState, programIconsSelect } from '$stores/stores.svelte';
 
-	let { name, icon, shortcut = false, program, programProps = {} } = $props();
+	let {
+		name,
+		icon,
+		shortcut = false,
+		program = undefined,
+		programProps = {},
+		externalSite = undefined
+	} = $props();
 
 	function clickHandler(event: MouseEvent) {
 		event.stopPropagation();
@@ -27,7 +34,13 @@
 	class="program-icon"
 	class:program-icon_select={programIconsSelect.includes(name)}
 	onclick={clickHandler}
-	ondblclick={() => newWindow(program, programProps)}
+	ondblclick={() => {
+		if (program) {
+			newWindow(program, programProps);
+		} else if (externalSite) {
+			window.open(externalSite)?.focus();
+		}
+	}}
 >
 	<div class="program-icon_container" style="--icon-url: url({icon})">
 		<img class="program-icon_icon" src={icon} alt="{name} Icon" draggable="false" />

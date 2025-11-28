@@ -133,6 +133,9 @@ export function newPrompt(icon: string = 'Error', title: string = 'Error', text:
 	const windowID = nextID++;
 	windows.push({
 		windowID,
+		meta: {
+			title
+		},
 		program: Prompt as Component,
 		zIndex: windowZIndexState.windowZIndex++,
 		minimized: false,
@@ -142,4 +145,5 @@ export function newPrompt(icon: string = 'Error', title: string = 'Error', text:
 			text
 		}
 	});
+	focusWindow(windowID);
 }

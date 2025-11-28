@@ -6,6 +6,7 @@
 
 <button
 	class="nodrag window_titlebar_{windowContext.maximized() ? 'maxxed' : 'maximize'}"
+	disabled={!windowContext.scalable()}
 	onclick={windowContext.handleMaximize}
 />
 

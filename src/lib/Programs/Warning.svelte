@@ -7,12 +7,17 @@
 
 <script>
 	import { Window } from '$components/ui/window';
+	import { newPrompt } from '$lib/index.svelte';
 	let { windowID, zIndex, minimized = false, initialPosition } = $props();
 </script>
 
 <Window.Root initialSize={{ h: 200, w: 240 }} {windowID} {zIndex} {minimized} {initialPosition}>
 	<Window.TitleBar title={meta.title} icon={meta.icon}>
-		<Window.HelpButton />
+		<Window.HelpButton
+			onclick={() => {
+				newPrompt('Help', 'Lativion OS', '');
+			}}
+		/>
 		<Window.MinimizeButton />
 		<Window.MaximizeButton />
 		<Window.CloseButton />

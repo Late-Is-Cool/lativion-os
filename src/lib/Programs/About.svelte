@@ -19,7 +19,6 @@
 	{windowID}
 	initialPosition={{ x: (innerWidth - windowWidth) / 2, y: (innerHeight - windowHeight) / 2 }}
 	initialSize={{ h: windowHeight, w: windowWidth }}
-	scalable={meta.scalable}
 	animations={false}
 	{zIndex}
 	{minimized}
