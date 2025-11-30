@@ -7,12 +7,14 @@ A Simulated Operating System in the Web
 ![Lativion OS Preview Image](github/preview.png)
 
 # What is Lativion OS? Is it a real operating system?
-Lativion OS is a **fake** *simulated* operating system that uses the Svelte framework and SvelteKit. I wanted to make a website after taking a haitus of programming sites. But I didn't want to make a bland old boring portfolio site. I wanted Pizzazz! So, came this, proud of the result so far! Lots more to come though!
+
+Lativion OS is a **fake** _simulated_ operating system that uses the Svelte framework and SvelteKit. I wanted to make a website after taking a haitus of programming sites. But I didn't want to make a bland old boring portfolio site. I wanted Pizzazz! So, came this, proud of the result so far! Lots more to come though!
 
 # Sounds cool! May I use this for my website as well?
+
 Honestly? Go for it, I would not recommend using this repository right now. But I will make a separate template repository so it will be easier.
 
- Now here comes the boring stuff...
+Now here comes the boring stuff...
 
 # Developing
 
@@ -56,7 +58,7 @@ Making programs may be difficult in the current state of this project. But hopef
 
 # Is there an active dev log currently?
 
-Soon to be on https://blog.latetheidiot.dev/lativion-os
+Yes! [On my blog site here!](https://blog.latetheidiot.dev/blog/categories/lativionos)
 
 ---
 
