@@ -1,1 +1,1 @@
-export * as Window from "./exports"
+export * as Window from './exports';

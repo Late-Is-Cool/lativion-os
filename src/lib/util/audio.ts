@@ -12,11 +12,20 @@ export const sounds: Sounds = {
 };
 
 export function playSound(name: keyof Sounds) {
-	if (!config.volume) return;
+	// if (!config.volume) return;
 	if (!sounds[name]) {
 		console.error(`${name} is not a valid sound!`);
 		return;
 	}
 
 	sounds[name].play();
+}
+
+export function setVolume(volume: number) {
+	if (volume < 0 || volume > 100) {
+		console.error(`${volume} is invalid, input an integer between 0 and 100.`);
+	}
+	let volumeDecimal = volume / 100;
+
+	Howler.volume(volumeDecimal);
 }

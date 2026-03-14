@@ -1,6 +1,13 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import '../app.scss';
 	import 'animate.css';
+
+	if (browser) {
+		if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+			import('overlayscrollbars/overlayscrollbars.css');
+		}
+	}
 
 	let { children } = $props();
 

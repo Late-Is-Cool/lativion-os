@@ -17,6 +17,12 @@
 }
 
 @font-face {
+	font-family: 'W95FA';
+	font-style: normal;
+	src: url('/System/ImportantFiles/Fonts/w95fa/w95fa.woff2');
+}
+
+@font-face {
 	font-family: 'Ubuntu Mono';
 	font-style: normal;
 	src: url('/System/ImportantFiles/Fonts/ubuntu-mono/UbuntuMono-Regular.ttf');
@@ -199,13 +205,17 @@ a {
 	width: 100%;
 	position: absolute;
 	font-family: 'PX Sans Nouveaux';
+	// font-family: 'W95FA';
 	image-rendering: crisp-edges;
+	// image-rendering: pixelated;
 	overflow: hidden;
 
 	&_desktop {
 		height: 100%;
 		width: 100%;
-		background-image: url('/System/ImportantFiles/Shell/Themes/9x/Wallpapers/wallpaper-blue.png');
+		background-image: url('/System/ImportantFiles/Shell/Themes/9x/Wallpapers/wallpaper-branding.png');
+		// background-image: url('/System/ImportantFiles/Shell/Themes/9x/Wallpapers/wallpaper-blue-dark.png');
+		// background-image: url('/System/ImportantFiles/Shell/Themes/9x/Wallpapers/outdoors-1.jpg');
 		background-repeat: no-repeat;
 		background-size: cover;
 		// z-index: -50;
@@ -216,6 +226,12 @@ a {
 		display: flex;
 		flex-direction: column;
 		gap: 12px;
+	}
+
+	&_windows {
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
 }
 

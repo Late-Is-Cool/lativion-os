@@ -45,15 +45,4 @@ export const windowZIndexState = {
 	}
 };
 
-let positionCounter: number = $state(0);
-
-export const positionCounterState = {
-	get positionCounter() {
-		return positionCounter;
-	},
-	set positionCounter(value) {
-		positionCounter = value;
-	}
-};
-
 export let programIconsSelect: string[] = $state([]);

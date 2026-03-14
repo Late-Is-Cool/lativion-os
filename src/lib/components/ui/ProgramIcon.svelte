@@ -42,15 +42,15 @@
 		}
 	}}
 >
-	<div class="program-icon_container" style="--icon-url: url({icon})">
+	<div
+		class="program-icon_container"
+		style="--icon-url: url({icon}); --shortcut: {shortcut
+			? 'url(/System/ImportantFiles/Shell/Themes/9x/shortcut.png)'
+			: 'none'};"
+	>
 		<img class="program-icon_icon" src={icon} alt="{name} Icon" draggable="false" />
 		{#if shortcut}
-			<img
-				class="program-icon_shortcut"
-				src="/System/ImportantFiles/Shell/Themes/9x/shortcut.png"
-				alt="{name} Icon"
-				draggable="false"
-			/>
+			<div class="program-icon_shortcut" />
 		{/if}
 	</div>
 	<span class="program-icon_title">{name}</span>

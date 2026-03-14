@@ -6,6 +6,8 @@
 </script>
 
 <script lang="ts">
+	import { ContextMenu } from '$components/ui/context-menu';
+
 	import { Window } from '$components/ui/window';
 	import { onMount } from 'svelte';
 
@@ -42,10 +44,6 @@
 	onMount(() => {
 		loadSite();
 	});
-
-	// function loadedSite() {
-	// 	iframeReady = true;
-	// }
 </script>
 
 <Window.Root {windowID} {zIndex} {minimized}>
@@ -55,7 +53,11 @@
 		<Window.CloseButton />
 	</Window.TitleBar>
 	<Window.TabListContainer>
-		<Window.TabListItem text="Help"></Window.TabListItem>
+		<Window.TabListItem text="Help">
+			<ContextMenu.Root>
+				<ContextMenu.Item onclick={() => {}} text="IDK" />
+			</ContextMenu.Root>
+		</Window.TabListItem>
 		<form style="display: flex; width: 100%">
 			<input
 				type="text"

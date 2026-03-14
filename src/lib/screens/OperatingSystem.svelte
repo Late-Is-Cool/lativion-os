@@ -1,23 +1,24 @@
 <script lang="ts">
-	import '$lib/skins/9x/9x.scss';
+	import '$lib/skins/9x/index.scss';
 
-	import { onMount, tick } from 'svelte';
+	import { onMount, setContext, tick } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import {
 		config,
 		windowZIndexState,
-		positionCounterState,
 		programIconsSelect,
 		activeWindowState
 	} from '$stores/stores.svelte';
 	// * components
-	import TaskApp from '$components/ui/TaskApp.svelte';
-	import { ContextMenu } from '$components/ui/context-menu/index';
+	import { Taskbar } from '$components/ui/taskbar';
+	import { SystemTray } from '$components/ui/taskbar/systemTray';
+	import { ContextMenu } from '$components/ui/context-menu';
 	import ProgramIcon from '$components/ui/ProgramIcon.svelte';
 	// * util
-	import { playSound } from '$lib/util/audio';
-	import { newWindow, windows } from '$lib/index.svelte';
-	import SelectionBox from '$components/ui/SelectionBox.svelte';
+	import { playSound, setVolume } from '$lib/util/audio';
+	import { newWindow, programList, windows } from '$lib/index.svelte';
+	import { SelectionBox } from '$components/ui/selection';
+	import { StartMenu } from '$components/ui/start-menu';
 
 	// * stinking states
 	let overlay: boolean = $state(true);
@@ -28,9 +29,10 @@
 		})
 	);
 
-	// * start menu
-	let startMenuToggle: boolean = $state(false);
-	let contextMenuToggle: boolean = $state(false);
+	let toggles = $state({
+		startMenu: false,
+		contextMenu: false
+	});
 
 	// * context menu
 	let contextMenuElement: HTMLElement;
@@ -39,13 +41,18 @@
 
 	// * functions
 	async function contextMenuFunc(event: MouseEvent) {
+		toggles.contextMenu = false;
+
+		await tick();
+
 		event.preventDefault();
+		event.stopImmediatePropagation();
 
-		const target = event.target as HTMLElement;
-		if (!target?.classList.contains('operating-system_desktop')) return;
+		// const target = event.target as HTMLElement;
+		// if (!target?.classList.contains('operating-system_desktop')) return;
 
-		contextMenuToggle = true;
-		startMenuToggle = false;
+		toggles.contextMenu = true;
+		toggles.startMenu = false;
 
 		await tick();
 
@@ -57,7 +64,12 @@
 			event.clientY >= innerHeight - contextMenuElement.offsetHeight - 31
 				? event.clientY - contextMenuElement.offsetHeight
 				: event.clientY;
+
+		// contextMenuX = event.clientX;
+		// contextMenuY = event.clientY;
 	}
+
+	setContext('osToggles', toggles);
 
 	$effect(() => {
 		const timeInterval: ReturnType<typeof setInterval> = setInterval(() => {
@@ -73,7 +85,6 @@
 
 	$effect(() => {
 		if (windows.length === 1) windowZIndexState.windowZIndex = 0;
-		if (positionCounterState.positionCounter === 10) positionCounterState.positionCounter = 0;
 	});
 
 	onMount(() => {
@@ -87,154 +98,167 @@
 	class="operating-system"
 	oncontextmenu={contextMenuFunc}
 	onclick={() => {
-		contextMenuToggle = false;
-		startMenuToggle = false;
+		toggles.contextMenu = false;
+		toggles.startMenu = false;
 		programIconsSelect.length = 0;
 	}}
 >
 	<!-- * Desktop -->
 	<div
 		class="operating-system_desktop"
-		onmousedown={async (event) => {
-			event.stopImmediatePropagation();
+		onmousedown={() => {
 			activeWindowState.activeWindow = null;
 		}}
 	>
-		<!-- <SelectionBox /> -->
-		<div class="operating-system_desktop-programs">
-			<ProgramIcon
-				name="Test"
-				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/debug-32-abnormal.png"
-				program="warning"
-			/>
-			<ProgramIcon
-				name="Notepad"
-				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Text.png"
-				program="notepad"
-				shortcut
-			/>
-			<ProgramIcon
-				name="Oneko"
-				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Oneko.png"
-				program="oneko"
-				shortcut
-			/>
-			<ProgramIcon
-				name="Not a virus :)"
-				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Text.png"
-				program="hydra"
-			/>
-			<ProgramIcon
-				name="Browser"
-				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Browser.png"
-				program="browser"
-			/>
-			<ProgramIcon
-				name="Buy Me a Coffee"
-				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/BMaC.png"
-				externalSite="https://buymeacoffee.com/late"
-				shortcut
-			/>
-		</div>
-		<div>
-			{#each windows as window (window.windowID)}
-				{@const Program = window.program}
-				<Program
-					{...window.props}
-					windowID={window.windowID}
-					zIndex={window.zIndex}
-					minimized={window.minimized}
+		<SelectionBox.Root>
+			<div class="operating-system_desktop-programs">
+				<ProgramIcon
+					name="Test"
+					icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/debug-32-abnormal.png"
+					program="warning"
+					shortcut
 				/>
-				<!--
-					 initialPosition={{
-						x: 30 + positionCounterState.positionCounter * 20,
-						y: 60 + positionCounterState.positionCounter * 20
-					}} 
-				-->
-			{/each}
-		</div>
+				<ProgramIcon
+					name="Notepad"
+					icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Text.png"
+					program="notepad"
+					shortcut
+				/>
+				<ProgramIcon
+					name="Oneko"
+					icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Oneko.png"
+					program="oneko"
+					shortcut
+				/>
+				<ProgramIcon
+					name="Not a virus :)"
+					icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Text.png"
+					program="hydra"
+				/>
+				<ProgramIcon
+					name="Browser"
+					icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Browser.png"
+					program="browser"
+					shortcut
+				/>
+				<ProgramIcon
+					name="Buy Me a Coffee"
+					icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/BMaC.png"
+					externalSite="https://buymeacoffee.com/late"
+					shortcut
+				/>
+			</div>
+		</SelectionBox.Root>
 	</div>
-	<!-- * Taskbar  -->
-	<div
-		class="taskbar animate__animated animate__fadeInUp"
-		onclick={() => {
-			contextMenuToggle = false;
-			startMenuToggle = false;
-		}}
-	>
-		<!-- special start button because i cant be bothered -->
-		<button
-			class="taskbar_start-button"
-			aria-pressed={startMenuToggle}
-			onclick={(event) => {
-				event.stopPropagation();
-				startMenuToggle = !startMenuToggle;
-				contextMenuToggle = false;
-			}}
-		>
-			<img
-				src="/System/ImportantFiles/Brand/LativionOS-Small.png"
-				alt="Lativion OS Logo Small"
-				aria-hidden
-				draggable="false"
+
+	<!-- * why were windows in the desktop, is there a lore reason -->
+	<div class="operating-system_windows">
+		{#each windows as window (window.windowID)}
+			{@const Program = window.program}
+			<Program
+				{...window.props}
+				windowID={window.windowID}
+				zIndex={window.zIndex}
+				minimized={window.minimized}
+				initialPosition={{
+					x: 30 + (windows.length % 9) * 20,
+					y: 60 + (windows.length % 9) * 20
+				}}
 			/>
-			<span>Start</span>
-		</button>
+			<!--
+				initialPosition={{
+					x: 30 + positionCounterState.positionCounter * 20,
+					y: 60 + positionCounterState.positionCounter * 20
+				}} 
+			-->
+		{/each}
+	</div>
+
+	<!-- * Taskbar  -->
+	<Taskbar.Root>
+		<Taskbar.StartButton icon="/System/ImportantFiles/Brand/LativionOS-Small.png" text="Start" />
 		<div class="divider-vertical"></div>
 		<div class="taskbar_programs">
 			{#each windows as window (window.windowID)}
 				{#if window.meta?.taskApp !== false}
-					<TaskApp windowID={window.windowID} title={window.meta?.title} icon={window.meta?.icon} />
+					<Taskbar.TaskApp
+						windowID={window.windowID}
+						title={window.meta?.title}
+						icon={window.meta?.icon}
+					/>
 				{/if}
 			{/each}
 		</div>
-		<div class="taskbar_system-tray">
+		<SystemTray.Root>
 			{#each windows as window (window.windowID)}
 				{#if window.meta?.systemTray}
-					<img src={window.meta.icon} alt={window.meta.title} draggable="false" />
+					<SystemTray.TrayApp icon={window.meta.icon} name={window.meta.title} action={() => {}} />
 				{/if}
 			{/each}
-			<img
-				src="/System/ImportantFiles/Shell/Themes/9x/Icons/16x16/Volume{config.volume
+			<SystemTray.TrayApp
+				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/16x16/Volume{config.volume
 					? ''
 					: '-Mute'}.png"
-				alt="Volume"
-				onclick={() => (config.volume = !config.volume)}
+				name=""
+				action={() => {
+					if (config.volume == true) {
+						setVolume(0);
+						config.volume = false;
+					} else {
+						setVolume(100);
+						config.volume = true;
+					}
+				}}
 			/>
 			<span>{time}</span>
-		</div>
-	</div>
-	<!--* Start menu -->
-	{#if startMenuToggle}
-		<div class="start-menu">
-			<div class="start-menu_title"><span>Lativion OS</span></div>
-			<ul class="start-menu_container">
-				<li class="start-menu_item start-menu_item_sub">
-					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Programs.png" alt="Icon" />
-					<span>Programs</span>
-				</li>
-				<li class="start-menu_item">
-					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Settings.png" alt="Icon" />
-					<span>Settings</span>
-				</li>
-				<div class="divider-horizontal"></div>
-				<li class="start-menu_item">
-					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Help.png" alt="Icon" />
-					<span>Help</span>
-				</li>
-				<li
-					class="start-menu_item"
-					onclick={() => {
-						newWindow('run');
-						startMenuToggle = false;
-					}}
+		</SystemTray.Root>
+	</Taskbar.Root>
+	<!-- * Start menu -->
+	{#if toggles.startMenu}
+		<StartMenu.Root>
+			<StartMenu.Title text="Lativion OS" />
+			<StartMenu.Container>
+				<!-- <StartMenu.Item
+					text="Lativion OS Update"
+					img="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/LativionOSUpdate.png"
+				/>
+				<div class="divider-horizontal"></div> -->
+				<StartMenu.Item
+					text="Programs"
+					img="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Programs.png"
 				>
-					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Run.png" alt="Icon" />
-					<span>Run...</span>
-				</li>
+					<ContextMenu.Root>
+						{#each programList as program}
+							{#if program.folders[0] !== '(sys78)'}
+								<ContextMenu.Item
+									onclick={() => newWindow(program.programName)}
+									text={program.title}
+									icon={program.icon || null}
+								/>
+							{/if}
+						{/each}
+					</ContextMenu.Root>
+				</StartMenu.Item>
+				<!-- <StartMenu.Item
+					text="Settings"
+					img="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Settings.png"
+				/> -->
 				<div class="divider-horizontal"></div>
-				<li
-					class="start-menu_item"
+				<!-- <StartMenu.Item
+					text="Help"
+					img="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Help.png"
+				/> -->
+				<StartMenu.Item
+					text="Run..."
+					img="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Run.png"
+					onclick={() => newWindow('run')}
+				/>
+				<div class="divider-horizontal"></div>
+				<StartMenu.Item
+					text={config.fullscreen ? 'Minimize' : 'Fullscreen'}
+					img={config.fullscreen
+						? '/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Minimize.png'
+						: '/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Fullscreen.png'}
 					onclick={() => {
 						const documentElement = document.documentElement;
 						if (!config.fullscreen) {
@@ -243,52 +267,42 @@
 							document.exitFullscreen?.();
 						}
 						config.fullscreen = !config.fullscreen;
-						startMenuToggle = false;
 					}}
-				>
-					{#if config.fullscreen}
-						<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Minimize.png" alt="Icon" />
-						<span>Minimize</span>
-					{:else}
-						<img
-							src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Fullscreen.png"
-							alt="Icon"
-						/>
-						<span>Fullscreen</span>
-					{/if}
-				</li>
-				<li class="start-menu_item">
-					<img src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Shutdown.png" alt="Icon" />
-					<span>Shut Down...</span>
-				</li>
+				/>
+				<!-- <StartMenu.Item
+					text="Shut Down..."
+					img="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/Shutdown.png"
+				/> -->
 				<div class="divider-horizontal"></div>
-				<li
-					class="start-menu_item"
+				<StartMenu.Item
+					text="About"
+					img="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/File-Informative.png"
 					onclick={() => {
 						newWindow('about');
-						startMenuToggle = false;
 					}}
-				>
-					<img
-						src="/System/ImportantFiles/Shell/Themes/9x/Icons/24x24/File-Informative.png"
-						alt="Icon"
-					/>
-					<span>About</span>
-				</li>
-			</ul>
-		</div>
+				/>
+			</StartMenu.Container>
+		</StartMenu.Root>
 	{/if}
-	<!--* Context Menu -->
-	{#if contextMenuToggle}
-		<ContextMenu.Root x={contextMenuX} y={contextMenuY} bind:node={contextMenuElement}>
-			<ContextMenu.Item onclick={() => console.log('thing')} text="Create File..." />
-			<ContextMenu.Item
-				onclick={() => console.log('thing2')}
-				icon="/System/ImportantFiles/Shell/Themes/9x/Icons/16x16/debug-16.png"
-				text="Create Folder..."
-			/>
+	<!-- * Context Menu -->
+	{#if toggles.contextMenu}
+		<ContextMenu.Root
+			position={{ x: contextMenuX, y: contextMenuY }}
+			bind:node={contextMenuElement}
+		>
+			<ContextMenu.Item onclick={() => console.log('WHAT')} text="Paste" disabled />
+			<ContextMenu.Item onclick={() => {}} text="Paste Shortcut" disabled />
 			<div class="divider-horizontal"></div>
-			<ContextMenu.Item onclick={() => console.log('thing3')} text="Properties" />
+			<ContextMenu.Item onclick={() => console.log('thing')} text="New" disabled>
+				<ContextMenu.Root>
+					<ContextMenu.Item onclick={() => {}} text="Folder" />
+					<ContextMenu.Item onclick={() => {}} text="Shortcut" />
+					<div class="divider-horizontal"></div>
+					<ContextMenu.Item onclick={() => {}} text="Text Document" />
+				</ContextMenu.Root>
+			</ContextMenu.Item>
+			<div class="divider-horizontal"></div>
+			<ContextMenu.Item onclick={() => console.log('thing3')} text="Properties" disabled />
 		</ContextMenu.Root>
 	{/if}
 </div>

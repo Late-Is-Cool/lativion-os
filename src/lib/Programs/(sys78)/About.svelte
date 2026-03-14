@@ -8,6 +8,7 @@
 <script>
 	import { Window } from '$components/ui/window';
 	import { newWindow, removeWindow } from '$lib/index.svelte';
+	import { getContext } from 'svelte';
 
 	let { windowID, zIndex, minimized = false } = $props();
 
@@ -46,7 +47,7 @@
 			<div class="about_body">
 				<p>
 					LateTheIdiot Lativion OS<br />
-					Version (Most Recent Good Version)<br />
+					Version {getContext('version')}<br />
 					<br />
 					This was just a fun summer project.<br />
 					And I had a lot of fun doing it! :)<br />

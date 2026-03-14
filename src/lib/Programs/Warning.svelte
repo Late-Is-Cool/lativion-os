@@ -26,11 +26,7 @@
 		<div
 			style="font-size: 12px; display: flex; align-items: center; justify-content: center; height: 100%; overflow: scroll;"
 		>
-			<span
-				>Everything in this site is NOT FINAL.<br />Thank you for your understanding.
-				<br /><br />
-				P.S. Yes, the menu is indeed mostly empty, only thing working is About, and fullscreen, Sorry...
-			</span>
+			<span>Everything in this site is NOT FINAL.<br />Thank you for your understanding. </span>
 		</div>
 	</Window.Body>
 	<Window.Scalable minimumSize={{ h: 120, w: 150 }} />

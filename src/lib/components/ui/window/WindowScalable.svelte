@@ -115,9 +115,9 @@
 		}
 	}
 
-	$effect(() => {
-		$inspect(size, position);
-	});
+	// $effect(() => {
+	// 	$inspect(size, position);
+	// });
 </script>
 
 <svelte:window

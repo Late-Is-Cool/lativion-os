@@ -1,3 +1,10 @@
+<script module>
+	export const meta = {
+		title: 'Idiot',
+		icon: '/System/ImportantFiles/Shell/Themes/9x/Icons/16x16/Program/YouAreAnIdiot.png'
+	};
+</script>
+
 <script lang="ts">
 	import { Window } from '$components/ui/window';
 

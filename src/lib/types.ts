@@ -19,3 +19,25 @@ interface WindowContext {
 		resizing: boolean;
 	};
 }
+
+// kinda... idk
+interface SubMenuContext {
+	subMenuItem: () => HTMLElement;
+	hovered: boolean;
+	isHovered: (value: boolean) => void;
+}
+
+interface TabListMenuContext {
+	tablistItem: () => HTMLButtonElement;
+}
+
+interface TablistContext {
+	register: () => number;
+	activate: (index: number | null) => void;
+	isActive: (index: number | null) => boolean;
+}
+
+interface osTogglesContext {
+	startMenu: boolean;
+	contextMenu: boolean;
+}

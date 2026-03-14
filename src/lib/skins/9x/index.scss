@@ -205,13 +205,16 @@ input[type='text'] {
 	background-color: silver;
 	font-size: 8px;
 	min-width: 115px;
+	width: max-content;
 	padding: 3px;
 
-	position: absolute;
+	position: fixed;
 
 	box-shadow: $border-9x;
 
 	z-index: 999999;
+
+	white-space: nowrap;
 
 	&_container {
 		color: black;
@@ -236,6 +239,30 @@ input[type='text'] {
 		&:hover {
 			background-color: $accent-color;
 			color: white;
+		}
+
+		&[aria-disabled] {
+			color: gray;
+			// font-size: 8px;
+			text-shadow: 1px 1px white;
+			// padding: 1px 3px 3px 3px;
+			// border: 1px dashed (rgba($color: #000000, $alpha: 0));
+			// text-align: center;
+
+			&:hover {
+				text-shadow: none;
+			}
+		}
+
+		&_sub {
+			&:hover::after {
+				content: url('/System/ImportantFiles/Shell/Themes/9x/arrow-right-white.png');
+			}
+			&::after {
+				position: absolute;
+				right: 8px;
+				content: url('/System/ImportantFiles/Shell/Themes/9x/arrow-right.png');
+			}
 		}
 	}
 }
@@ -270,7 +297,7 @@ input[type='text'] {
 	font-size: 8px;
 	padding: 4px;
 
-	position: absolute;
+	position: fixed;
 
 	display: flex;
 	flex-direction: column;
@@ -286,6 +313,12 @@ input[type='text'] {
 
 	&_body {
 		color: black;
+
+		position: relative;
+
+		display: flex;
+		flex-direction: column;
+
 		flex-grow: 1;
 		overflow: hidden;
 	}
@@ -543,9 +576,13 @@ input[type='text'] {
 	}
 
 	&_shortcut {
+		width: 11px;
+		height: 11px;
+		background-image: url(/System/ImportantFiles/Shell/Themes/9x/shortcut.png);
 		position: absolute;
 		bottom: 0;
 		left: 0;
+		z-index: 1;
 	}
 
 	&_title {
@@ -558,9 +595,27 @@ input[type='text'] {
 	}
 
 	&_select {
-		// background-color: black;
 		.program-icon_container {
-			filter: brightness(0.4) sepia(100%) hue-rotate(200deg) saturate(4);
+			// filter: brightness(0.4) sepia(100%) hue-rotate(200deg) saturate(4);
+
+			&::after {
+				position: absolute;
+				content: '';
+
+				mask-image: var(--icon-url);
+
+				mask-size:
+					contain,
+					11px 11px;
+				mask-position:
+					center,
+					bottom left;
+				mask-repeat: no-repeat;
+
+				background: $accent-color;
+				opacity: 0.5;
+				inset: 0;
+			}
 		}
 
 		.program-icon_title {

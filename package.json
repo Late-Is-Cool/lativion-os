@@ -4,7 +4,7 @@
 	"version": "0.7.0",
 	"type": "module",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "vite dev --port 5174 -- --host",
 		"build": "vite build",
 		"preview": "vite preview",
 		"start": "node build/index.js",

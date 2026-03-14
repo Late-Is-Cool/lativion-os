@@ -7,16 +7,12 @@
 
 <script lang="ts">
 	import { Window } from '$components/ui/window';
-	import { newWindow, newPrompt } from '$lib/index.svelte';
+	import { newWindow } from '$lib/index.svelte';
 	import { getContext, onMount } from 'svelte';
 
 	let { windowID, zIndex, minimized } = $props();
 
 	let inputValue = $state('');
-
-	function run() {
-		newWindow(inputValue).catch((err) => newPrompt('Error', 'Run: Invalid Program', `${err}`));
-	}
 
 	let focus: HTMLElement;
 
@@ -46,7 +42,7 @@
 				<input bind:value={inputValue} type="text" bind:this={focus} />
 			</div>
 			<div class="run_buttons">
-				<button class="button" onclick={run}>OK</button>
+				<button class="button" onclick={() => newWindow(inputValue)}>OK</button>
 				<button class="button" onclick={getContext<WindowContext>('window').closeWindow}
 					>Cancel</button
 				>

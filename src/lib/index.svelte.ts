@@ -28,7 +28,7 @@
 //
 // Lativion OS stuff
 
-import type { Snippet, Component } from 'svelte';
+import type { Component } from 'svelte';
 
 interface ProgramMeta {
 	title: string;
@@ -40,19 +40,20 @@ interface ProgramMeta {
 
 interface ProgramModule {
 	program: Component;
-	meta?: ProgramMeta;
+	meta: ProgramMeta;
+	folders: string[];
 }
 
 type Program = {
 	windowID: number;
 	program: Component;
-	meta?: ProgramMeta;
+	meta: ProgramMeta;
 	zIndex: number;
 	minimized: boolean;
 	props: Object;
 };
 
-import { activeWindowState, positionCounterState, windowZIndexState } from '$stores/stores.svelte';
+import { activeWindowState, windowZIndexState } from '$stores/stores.svelte';
 import Prompt from '$components/ui/Prompt.svelte';
 
 // # load pseudo-programs
@@ -62,30 +63,56 @@ const programs: Record<string, () => Promise<ProgramModule>> = {};
 
 for (const path in programModules) {
 	const match = path.match(/\.\/Programs\/(.*)\.svelte$/);
+
 	if (!match || !match[1]) continue;
 
 	const segments = match[1]?.split('/');
 	const name = segments?.[segments.length - 1]?.toLowerCase();
+	const folders = segments.slice(0, -1);
 	if (!name) continue;
+
+	// let stupidFilter = folders.filter((item) => item.match(/^\(.*\)$/));
+	// if (stupidFilter.length) continue;
 
 	programs[name] = async () => {
 		const mod = (await programModules[path]()) as {
 			default: Component;
-			meta?: ProgramMeta;
+			meta: ProgramMeta;
 		};
+
 		return {
 			program: mod.default,
-			meta: mod?.meta
+			meta: mod.meta,
+			folders: folders
 		};
 	};
 }
+
+interface PADASDASDSAD extends ProgramMeta {
+	programName: string;
+	folders: string[];
+}
+export let programList: PADASDASDSAD[] = [];
+
+(async () => {
+	for await (let program of Object.keys(programs)) {
+		let programModule = await programs[program]();
+
+		let newObj = { ...programModule.meta, programName: program, folders: programModule.folders };
+
+		programList.push(newObj);
+	}
+})();
 
 export const windows: Program[] = $state([]);
 let nextID = 0;
 
 export async function newWindow(programName: string, props = {}): Promise<void> {
 	const programLoader = programs[programName.toLowerCase()];
-	if (!programLoader) throw new Error(`Program "${programName}" is not found!`);
+	if (!programLoader) {
+		newPrompt('Error', 'Program not found.', `"${programName}" is not a valid program.`);
+		throw new Error(`${programName} is not a valid program!`);
+	}
 
 	const { program, meta } = await programLoader();
 	const windowID = nextID++;
@@ -100,7 +127,6 @@ export async function newWindow(programName: string, props = {}): Promise<void> 
 
 	activeWindowState.activeWindow = windowID;
 	windowZIndexState.windowZIndex++;
-	positionCounterState.positionCounter++;
 }
 
 export function removeWindow(windowID: number): void {

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { setVolume } from '$lib/util/audio';
 	import { screenState, config } from '$stores/stores.svelte';
 	import { getContext } from 'svelte';
 
@@ -44,8 +45,15 @@
 			toggleOpt: true,
 			toggled: config.volume,
 			func() {
-				config.volume = !config.volume;
-				this.toggled = config.volume;
+				if (config.volume == true) {
+					setVolume(0);
+					config.volume = false;
+					this.toggled = false;
+				} else {
+					setVolume(100);
+					config.volume = true;
+					this.toggled = true;
+				}
 			}
 		},
 		{

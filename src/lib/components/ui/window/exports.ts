@@ -8,6 +8,7 @@ export { default as TabListContainer } from './tablist/WindowTablistContainer.sv
 export { default as TabListItem } from './tablist/WindowTablistItem.svelte';
 
 export { default as IFrame } from './WindowIFrame.svelte';
+export { default as ScrollArea } from './WindowScrollArea.svelte';
 
 export { default as CloseButton } from './buttons/CloseButton.svelte';
 export { default as MaximizeButton } from './buttons/MaximizeButton.svelte';
