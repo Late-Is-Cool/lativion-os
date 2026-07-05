@@ -22,6 +22,6 @@
 	<meta name="description" content={description} />
 	<meta property="og:title" content="Lativion OS" />
 	<meta property="og:description" content={description} />
-	<meta property="og:image" content="/System/ImportantFiles/Brand/LativionOS-Outline.png" />
+	<meta property="og:image" content="/System/ImportantFiles/Brand/LativionOS-Outline.svg" />
 	<meta name="theme-color" content="#f0e961" />
 </svelte:head>

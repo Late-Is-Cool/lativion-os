@@ -1,11 +1,10 @@
 <script lang="ts">
+	import BootLoadingBar from '$components/ui/BootLoadingBar.svelte';
 	import { screenState } from '$stores/stores.svelte';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	let overlay: boolean = $state(true);
-
-	let stupidVar: string = $state('-Empty');
 
 	onMount(async () => {
 		overlay = false;
@@ -16,15 +15,13 @@
 
 <div class="bootlaunch">
 	<div class="bootlaunch_logo">
-		<div>
-			<img src="/System/ImportantFiles/Brand/LativionOS-Boot.png" alt="Lativion OS Logo" />
-		</div>
+		<img src="/System/ImportantFiles/Brand/LativionOS-Boot.svg" alt="Lativion OS Logo" />
 	</div>
-	<div>
-		<img src="/System/ImportantFiles/Shell/Loading{stupidVar}.gif" alt="Loading Bar" />
-	</div>
+
+	<BootLoadingBar />
+
 	<div class="bootlaunch_otherlogo">
-		<img src="/System/ImportantFiles/Brand/LateTheIdiot-White.png" alt="LateTheIdiot" />
+		<img src="/System/ImportantFiles/Brand/LateTheIdiot-White.svg" alt="LateTheIdiot" />
 	</div>
 </div>
 
@@ -32,9 +29,10 @@
 	<div
 		class="fade-overlay"
 		transition:fade={{ duration: 500 }}
-		onoutroend={() => (stupidVar = '')}
 		onintroend={() => {
 			screenState.screen = 3;
 		}}
 	></div>
 {/if}
+
+<!--  -->

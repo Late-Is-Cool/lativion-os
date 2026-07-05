@@ -5,7 +5,7 @@
 	};
 </script>
 
-<script>
+<script lang="ts">
 	import { Window } from '$components/ui/window';
 	import { newPrompt } from '$lib/index.svelte';
 	let { windowID, zIndex, minimized = false, initialPosition } = $props();

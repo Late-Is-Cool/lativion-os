@@ -8,6 +8,8 @@
 
 	let time: string = '';
 
+	let bootPrepare: Element;
+
 	onMount(() => {
 		let array = [
 			{
@@ -16,6 +18,10 @@
 			{
 				text: `${window.navigator.userAgent}`,
 				style: 'color: yellow;'
+			},
+			{
+				text: `CPU Cores/Threads: ${window.navigator.hardwareConcurrency}`,
+				style: 'color: aqua;'
 			},
 			{
 				text: 'Setting localtime to the hardware clock...',
@@ -44,6 +50,18 @@
 				status: 'failed'
 			},
 			{
+				text: 'AD:',
+				style: 'color: aqua; white-space: pre-line;',
+				func() {
+					const adPlacement = [
+						'Slow download speeds? Use ZapGrab!',
+						'Looking for jobs? Raytruxian Inc is hiring!',
+						'Tired of using the default browser? WebScrape is the better alternative for your surfing needs!'
+					];
+					this.text = `${this.text} ${adPlacement[Math.floor(Math.random() * adPlacement.length)]}\n(Don't want advertisements? Upgrade to Lativion OS Proper! Only $49.99 USD)`;
+				}
+			},
+			{
 				text: 'Gain consciousness',
 				status: 'ok'
 			},
@@ -62,6 +80,25 @@
 			{
 				text: 'Lose consciousness',
 				status: 'ok'
+			},
+			{
+				text: 'LOW AMOUNT OF RAM!!!',
+				status: 'warning'
+			},
+			{
+				text: 'Downloading more RAM....',
+				style: 'color: yellow;'
+			},
+			{
+				text: 'RAM downloaded!',
+				style: 'color: lime;',
+				func() {
+					const byteSize = ['MB', 'GB', 'TB'];
+
+					const number = (Math.floor(Math.random() * 10) + 1) * 8;
+
+					this.text = `${this.text} (${number} ${byteSize[Math.floor(Math.random() * byteSize.length)]})`;
+				}
 			},
 			{
 				text: 'Detected old hardware, updating to next century firmware...',
@@ -94,6 +131,8 @@
 				item?.func?.();
 				visibleArray.push(item);
 				await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 300));
+
+				bootPrepare.scrollTop = bootPrepare.scrollHeight;
 				if (visibleArray.length == array.length) {
 					screenState.screen = 2;
 				}
@@ -104,21 +143,23 @@
 	});
 </script>
 
-<div class="bootprepare">
-	<div>
-		{#each visibleArray as item}
-			<div class="bootprepare_message">
-				{#if item?.status}
-					<div>
-						[<span
-							style={item.status == 'failed' || item.status == 'exploded'
-								? 'color: red;'
-								: 'color: lime'}>{item.status.toUpperCase()}</span
-						>]
-					</div>
-				{/if}
-				<div style={item?.style}>{item.text}</div>
-			</div>
-		{/each}
-	</div>
+<div class="bootprepare" bind:this={bootPrepare}>
+	<!-- <div> -->
+	{#each visibleArray as item}
+		<div class="bootprepare_message">
+			{#if item?.status}
+				<div>
+					[<span
+						style={item.status == 'failed' ||
+						item.status == 'exploded' ||
+						item.status.match(/warning/gi)
+							? 'color: red;'
+							: 'color: lime'}>{item.status.toUpperCase()}</span
+					>]
+				</div>
+			{/if}
+			<span style={item?.style}>{item.text}</span>
+		</div>
+	{/each}
+	<!-- </div> -->
 </div>

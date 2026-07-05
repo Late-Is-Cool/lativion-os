@@ -14,8 +14,11 @@
 </script>
 
 <svelte:window
-	onmousedown={(event) => {
+	onclick={(event) => {
+		console.log(item);
+		console.log(event.target);
 		if (item && event.target) {
+			console.log('what2');
 		}
 		tablistContext.activate(null);
 	}}
@@ -36,8 +39,10 @@
 			tablistContext.activate(index);
 		}
 	}}
-	bind:this={item}>{text}</button
+	bind:this={item}
 >
+	{text}
+</button>
 
 {#if tablistContext.isActive(index)}
 	{@render children?.()}

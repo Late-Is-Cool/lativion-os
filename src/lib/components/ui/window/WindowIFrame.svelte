@@ -5,8 +5,8 @@
 	let {
 		src,
 		node = $bindable(),
-		onload = () => {}
-	}: { src: string; node?: HTMLElement; onload?: EventHandler } = $props();
+		onload = undefined
+	}: { src: string; node?: HTMLIFrameElement; onload?: EventHandler } = $props();
 
 	let windowContext = getContext<WindowContext>('window');
 </script>

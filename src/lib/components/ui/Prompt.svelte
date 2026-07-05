@@ -33,11 +33,11 @@
 	type Icon = 'Error' | 'Warning' | 'Info' | 'Help';
 
 	onMount(() => {
-		// if (icon === 'Error') {
-		// 	playSound('quack');
-		// } else {
-		playSound('chord');
-		// }
+		if (icon === 'Error') {
+			playSound('error');
+		} else {
+			playSound('info');
+		}
 	});
 </script>
 

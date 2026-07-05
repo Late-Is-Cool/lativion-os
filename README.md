@@ -62,4 +62,4 @@ Yes! [On my blog site here!](https://blog.latetheidiot.dev/blog/categories/lativ
 
 ---
 
-![LateTheIdiot](static/System/ImportantFiles/Brand/LativionOS-Outline.png)
+![LateTheIdiot](static/System/ImportantFiles/Brand/LativionOS-Outline.svg)

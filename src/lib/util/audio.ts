@@ -5,9 +5,10 @@ import { config } from '$stores/stores.svelte';
 type Sounds = Record<string, Howl>;
 
 export const sounds: Sounds = {
-	boot: new Howl({ src: ['/System/ImportantFiles/Sounds/boot.mp3'] }),
+	startup: new Howl({ src: ['/System/ImportantFiles/Sounds/startup.mp3'] }),
 	tada: new Howl({ src: ['/System/ImportantFiles/Sounds/tada.mp3'] }),
-	chord: new Howl({ src: ['System/ImportantFiles/Sounds/chord.mp3'] }),
+	error: new Howl({ src: ['System/ImportantFiles/Sounds/error.mp3'] }),
+	info: new Howl({ src: ['System/ImportantFiles/Sounds/info.mp3'] }),
 	quack: new Howl({ src: ['System/ImportantFiles/Sounds/quack.mp3'] })
 };
 

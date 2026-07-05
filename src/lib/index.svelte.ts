@@ -53,6 +53,11 @@ type Program = {
 	props: Object;
 };
 
+interface ProgramList extends ProgramMeta {
+	programName: string;
+	folders: string[];
+}
+
 import { activeWindowState, windowZIndexState } from '$stores/stores.svelte';
 import Prompt from '$components/ui/Prompt.svelte';
 
@@ -88,11 +93,7 @@ for (const path in programModules) {
 	};
 }
 
-interface PADASDASDSAD extends ProgramMeta {
-	programName: string;
-	folders: string[];
-}
-export let programList: PADASDASDSAD[] = [];
+export let programList: ProgramList[] = [];
 
 (async () => {
 	for await (let program of Object.keys(programs)) {

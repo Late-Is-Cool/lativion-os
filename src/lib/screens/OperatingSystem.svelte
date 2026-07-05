@@ -89,7 +89,7 @@
 
 	onMount(() => {
 		overlay = false;
-		playSound('boot');
+		playSound('startup');
 		newWindow('warning');
 	});
 </script>
@@ -178,7 +178,7 @@
 	<Taskbar.Root>
 		<Taskbar.StartButton icon="/System/ImportantFiles/Brand/LativionOS-Small.png" text="Start" />
 		<div class="divider-vertical"></div>
-		<div class="taskbar_programs">
+		<Taskbar.TaskAppContainer>
 			{#each windows as window (window.windowID)}
 				{#if window.meta?.taskApp !== false}
 					<Taskbar.TaskApp
@@ -188,7 +188,7 @@
 					/>
 				{/if}
 			{/each}
-		</div>
+		</Taskbar.TaskAppContainer>
 		<SystemTray.Root>
 			{#each windows as window (window.windowID)}
 				{#if window.meta?.systemTray}

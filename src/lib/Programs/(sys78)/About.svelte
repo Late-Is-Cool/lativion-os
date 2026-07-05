@@ -5,7 +5,7 @@
 	};
 </script>
 
-<script>
+<script lang="ts">
 	import { Window } from '$components/ui/window';
 	import { newWindow, removeWindow } from '$lib/index.svelte';
 	import { getContext } from 'svelte';
@@ -31,13 +31,13 @@
 		<div class="about">
 			<div class="about_brand">
 				<img
-					src="/System/ImportantFiles/Brand/LateTheIdiot.png"
+					src="/System/ImportantFiles/Brand/LateTheIdiot.svg"
 					alt="LateTheIdiot"
 					class="about_comp-image"
 					draggable="false"
 				/>
 				<img
-					src="/System/ImportantFiles/Brand/Lativion OS Brand Black Alt.png"
+					src="/System/ImportantFiles/Brand/Lativion OS Brand Black Alt.svg"
 					alt="LateTheIdiot Lativion OS"
 					class="about_os-image"
 					draggable="false"
@@ -48,6 +48,7 @@
 				<p>
 					LateTheIdiot Lativion OS<br />
 					Version {getContext('version')}<br />
+					Copyright (C) 2025-{new Date().getFullYear()} LateTheIdiot/Late-Is-Cool.<br />
 					<br />
 					This was just a fun summer project.<br />
 					And I had a lot of fun doing it! :)<br />
@@ -94,8 +95,8 @@
 
 	.about_comp-image {
 		position: absolute;
-		height: 12px;
-		right: 10px;
+		height: 11px;
+		right: 12px;
 	}
 
 	.about_bar {

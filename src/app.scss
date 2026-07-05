@@ -150,6 +150,8 @@ a {
 	padding: 24px;
 	cursor: none;
 
+	overflow: auto;
+
 	font-family: 'Classic Console Neue';
 	font-size: 20px;
 	line-height: 28px;
@@ -174,6 +176,7 @@ a {
 	width: 100%;
 	padding: 24px;
 	cursor: none;
+	z-index: -99;
 
 	position: absolute;
 	top: 0;
@@ -185,6 +188,11 @@ a {
 
 	&_logo {
 		margin-bottom: 112px;
+
+		img {
+			height: 285px;
+			margin-left: 50px;
+		}
 	}
 
 	&_otherlogo {
@@ -197,6 +205,48 @@ a {
 		img {
 			height: 25px;
 		}
+	}
+}
+
+.bootbar {
+	image-rendering: crisp-edges;
+	position: relative;
+	overflow: hidden;
+	width: 126px;
+	height: 15px;
+
+	&-bar {
+		background-image: url('/System/ImportantFiles/Shell/Loading-Outline.png');
+		background-repeat: no-repeat;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	&-blocks {
+		background-image: url('/System/ImportantFiles/Shell/Loading-Bars.png');
+		background-repeat: no-repeat;
+		width: 24px;
+		height: 11px;
+
+		position: absolute;
+		top: 2px;
+		left: -22px;
+
+		z-index: -1;
+
+		animation: bootbar-marque 1.9s steps(19) 500ms infinite;
+	}
+}
+
+@keyframes bootbar-marque {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(168px);
 	}
 }
 
@@ -213,8 +263,8 @@ a {
 	&_desktop {
 		height: 100%;
 		width: 100%;
-		background-image: url('/System/ImportantFiles/Shell/Themes/9x/Wallpapers/wallpaper-branding.png');
-		// background-image: url('/System/ImportantFiles/Shell/Themes/9x/Wallpapers/wallpaper-blue-dark.png');
+		// background-image: url('/System/ImportantFiles/Shell/Themes/9x/Wallpapers/wallpaper-branding.png');
+		background-image: url('/System/ImportantFiles/Shell/Themes/9x/Wallpapers/wallpaper-blue-dark.png');
 		// background-image: url('/System/ImportantFiles/Shell/Themes/9x/Wallpapers/outdoors-1.jpg');
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -235,6 +285,23 @@ a {
 	}
 }
 
+.shutdown-screen {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	background-color: black;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	span {
+		font-family: 'Classic Console Neue';
+		color: #ed7a32;
+		font-size: 60px;
+	}
+}
+
 .fade-overlay {
 	background-color: black;
 	height: 100%;
@@ -246,6 +313,8 @@ a {
 
 	z-index: 50;
 }
+
+// other
 
 .window {
 	&_iframe {
