@@ -147,12 +147,6 @@
 					externalSite="https://buymeacoffee.com/late"
 					shortcut
 				/>
-				<ProgramIcon
-					name="Webrings"
-					icon="/System/ImportantFiles/Shell/Themes/9x/Icons/32x32/Info.png"
-					program="webrings"
-					shortcut
-				/>
 			</div>
 		</SelectionBox.Root>
 	</div>
